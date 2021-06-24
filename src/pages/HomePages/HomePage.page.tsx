@@ -1,9 +1,11 @@
 import { HomePageContainer } from './HomePage.style';
 
+import Form from '../../components/HomePageComponents/Form/Form.component';
+
 const HomePage = () => {
     return (
         <HomePageContainer>
-            This is home page
+            <Form />
         </HomePageContainer>
     )
 }
