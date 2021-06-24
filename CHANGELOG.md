@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/gajojr/invoice-app/compare/v0.1.1...v0.1.2) (2021-06-24)
+
+
+### Features
+
+* start making HomePage and it's components ([841d885](https://github.com/gajojr/invoice-app/commit/841d88520477699c3592e8c9908105d05ee8dc52))
+
 ### 0.1.1 (2021-06-24)
 
 
