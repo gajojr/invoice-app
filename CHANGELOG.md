@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/gajojr/invoice-app/compare/v0.1.3...v0.1.4) (2021-06-25)
+
+
+### Features
+
+* add tailwindcss and center the form in homepage ([7d3fab6](https://github.com/gajojr/invoice-app/commit/7d3fab66c7d61218c5c4facfb6e7b440ac0bfdd5))
+
 ### [0.1.3](https://github.com/gajojr/invoice-app/compare/v0.1.2...v0.1.3) (2021-06-24)
 
 
