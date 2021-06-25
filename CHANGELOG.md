@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/gajojr/invoice-app/compare/v0.1.7...v0.1.8) (2021-06-25)
+
+
+### Bug Fixes
+
+* change values type to any instead of FormData ([6a4e39e](https://github.com/gajojr/invoice-app/commit/6a4e39ed57db9043b552d1e7271173e7a8d8540f))
+
 ### [0.1.7](https://github.com/gajojr/invoice-app/compare/v0.1.6...v0.1.7) (2021-06-25)
 
 
