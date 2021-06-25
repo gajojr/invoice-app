@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FormElement, StyledButton } from './Form.styles';
+import { FormElement, StyledButton } from './Form.style';
 
 const Form = () => {
     return (

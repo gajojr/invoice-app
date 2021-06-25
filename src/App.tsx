@@ -6,6 +6,7 @@ import {
 import './App.less';
 
 import HomePage from './pages/HomePages/HomePage.page';
+import RegisterPage from './pages/RegisterPage/RegisterPage.page';
 
 function App() {
   return (
@@ -15,8 +16,7 @@ function App() {
           <HomePage />
         </Route>
         <Route path="/register">
-          {/* <RegisterPage /> */}
-          <div>Register Page</div>
+          <RegisterPage />
         </Route>
         <Route path="/log-in">
           {/* <LoginPage /> */}

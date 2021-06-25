@@ -1,6 +1,6 @@
 import Form from '../../components/HomePageComponents/Form/Form.component';
 
-import { HomePageContainer } from './HomePage.styles';
+import { HomePageContainer } from './HomePage.style';
 
 const HomePage = () => {
     return (
