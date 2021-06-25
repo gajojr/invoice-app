@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/gajojr/invoice-app/compare/v0.1.6...v0.1.7) (2021-06-25)
+
+
+### Features
+
+* add form on register page ([2d9aa1d](https://github.com/gajojr/invoice-app/commit/2d9aa1db54dc23458d52e81e3bee9b62656f05b2))
+
 ### [0.1.6](https://github.com/gajojr/invoice-app/compare/v0.1.5...v0.1.6) (2021-06-25)
 
 
