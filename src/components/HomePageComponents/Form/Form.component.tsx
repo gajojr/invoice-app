@@ -1,10 +1,16 @@
+import { Link } from 'react-router-dom';
 import { FormElement, StyledButton } from './Form.styles';
 
 const Form = () => {
     return (
         <FormElement>
-            <StyledButton>Register</StyledButton>
-            <StyledButton>Log In</StyledButton>
+            <h2>Invoice App</h2>
+            <StyledButton>
+                <Link to='/register'>Register</Link>
+            </StyledButton>
+            <StyledButton>
+                <Link to='/log-in'>Log In</Link>
+            </StyledButton>
         </FormElement>
     )
 }

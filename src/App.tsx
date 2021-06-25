@@ -18,7 +18,7 @@ function App() {
           {/* <RegisterPage /> */}
           <div>Register Page</div>
         </Route>
-        <Route path="/register">
+        <Route path="/log-in">
           {/* <LoginPage /> */}
           <div>Log In Page</div>
         </Route>
