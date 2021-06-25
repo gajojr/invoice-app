@@ -21,3 +21,8 @@ export const StyledButton = styled(Button)`
     width: 70%;
     align-self: center;
 `;
+
+export const UploadButton = styled(Button)`
+    margin: 5px;
+    width: 100%;
+`;

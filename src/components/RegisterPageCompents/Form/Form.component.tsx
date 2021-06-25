@@ -1,5 +1,6 @@
-import { FormElement, FormCaption, StyledButton } from './Form.style';
-import { Input } from 'antd';
+import { FormElement, FormCaption, StyledButton, UploadButton } from './Form.style';
+import { Input, Upload, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 // interface FormData {
 //     firstName: string;
@@ -14,6 +15,24 @@ import { Input } from 'antd';
 //     giroAccount: string;
 //     email: string;
 // }
+
+const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+        authorization: 'authorization-text',
+    },
+    onChange(info: any) {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    },
+};
 
 const Form = () => {
     // change values type to FormData
@@ -169,6 +188,10 @@ const Form = () => {
             >
                 <Input />
             </FormElement.Item>
+
+            <Upload {...props}>
+                <UploadButton icon={<UploadOutlined />}>Click to Upload</UploadButton>
+            </Upload>
 
             <StyledButton htmlType="submit">Register</StyledButton>
         </FormElement>
