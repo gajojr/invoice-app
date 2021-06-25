@@ -1,28 +1,30 @@
 import { FormElement, FormCaption, StyledButton } from './Form.style';
 import { Input } from 'antd';
 
-interface FormData {
-    firstName: string;
-    lastName: string;
-    password: string;
-    confirmPassword: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    companyName: string;
-    pib: string;
-    giroAccount: string;
-    email: string;
-}
+// interface FormData {
+//     firstName: string;
+//     lastName: string;
+//     password: string;
+//     confirmPassword: string;
+//     address: string;
+//     city: string;
+//     postalCode: string;
+//     companyName: string;
+//     pib: string;
+//     giroAccount: string;
+//     email: string;
+// }
 
 const Form = () => {
-    const onSubmit = (values: FormData) => {
+    // change values type to FormData
+    const onFinish = (values: any) => {
+        Object.values(values).map(value => console.log(typeof value));
         console.log(values);
         console.log(values instanceof FormData);
     }
 
     return (
-        <FormElement onFinish={onSubmit}>
+        <FormElement onFinish={onFinish}>
             <FormCaption>Register</FormCaption>
 
             <FormElement.Item
