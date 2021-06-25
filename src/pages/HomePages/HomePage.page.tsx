@@ -1,12 +1,10 @@
-import { HomePageContainer } from './HomePage.style';
-
 import Form from '../../components/HomePageComponents/Form/Form.component';
 
 const HomePage = () => {
     return (
-        <HomePageContainer>
+        <main className="flex justify-center items-center h-screen">
             <Form />
-        </HomePageContainer>
+        </main>
     )
 }
 
