@@ -1,10 +1,10 @@
-import { Form as FormElement, Button } from 'antd';
+import { FormElement, StyledButton } from './Form.styles';
 
 const Form = () => {
     return (
-        <FormElement className="flex justify-center items-center flex-col border-2 p-10">
-            <Button>Register</Button>
-            <Button>Log In</Button>
+        <FormElement>
+            <StyledButton>Register</StyledButton>
+            <StyledButton>Log In</StyledButton>
         </FormElement>
     )
 }

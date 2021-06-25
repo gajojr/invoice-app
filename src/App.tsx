@@ -4,7 +4,6 @@ import {
   Route
 } from 'react-router-dom';
 import './App.less';
-import './styles/output.css'
 
 import HomePage from './pages/HomePages/HomePage.page';
 
