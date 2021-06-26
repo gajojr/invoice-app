@@ -6,27 +6,14 @@ import { FormElement, FormCaption, StyledButton, UploadButton } from './Form.sty
 import { Input, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-// interface FormData {
-//     firstName: string;
-//     lastName: string;
-//     username: string;
-//     password: string;
-//     confirmPassword: string;
-//     address: string;
-//     city: string;
-//     postalCode: string;
-//     companyName: string;
-//     pib: string;
-//     giroAccount: string;
-//     email: string;
-// }
+import { FormData } from './UserSchema';
 
 const Form = () => {
     const [files, setFiles] = useState<File[]>([]);
 
     const props = {
         name: 'file',
-        beforeUpload: (file: any) => {
+        beforeUpload: (file: File) => {
             setFiles([file]);
             return false;
         },
@@ -34,28 +21,32 @@ const Form = () => {
             setFiles([]);
         },
         onChange(info: any) {
+            console.log(info.file.status)
             if (info.file.status !== 'uploading') {
                 console.log(info.file, info.fileList);
             }
-            if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
+            // if (info.file.status === 'done') {
+            //     message.success(`${info.file.name} file uploaded successfully`);
+            // } else if (info.file.status === 'error') {
+            //     message.error(`${info.file.name} file upload failed.`);
+            // }
         }
     };
 
     // change values type to FormData
     const onFinish = (values: any) => {
         if (!files.length) {
-            message.error('File upload is required');
+            message.error('File upload is required!');
+            return;
+        }
+
+        if (values.password !== values.confirmPassword) {
+            message.error('Passwords don\'t match!');
             return;
         }
         console.log(values);
 
         axios.post('http://localhost:5000/register', values);
-        // Object.values(values).map(value => console.log(typeof value));
-        // console.log(values instanceof FormData);
     }
 
     return (
