@@ -24,5 +24,5 @@ export const StyledButton = styled(Button)`
 
 export const UploadButton = styled(Button)`
     margin: 5px;
-    width: 100%;
+    width: 80%;
 `;
