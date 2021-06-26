@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/gajojr/invoice-app/compare/v0.1.13...v0.1.14) (2021-06-26)
+
+
+### Bug Fixes
+
+* fix insert statement on register route - post method, added '' around every ${body.key} ([302b2fa](https://github.com/gajojr/invoice-app/commit/302b2facb6eb968c64975ae5fded6e438df70f35))
+
 ### [0.1.13](https://github.com/gajojr/invoice-app/compare/v0.1.12...v0.1.13) (2021-06-26)
 
 
