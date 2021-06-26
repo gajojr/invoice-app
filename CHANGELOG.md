@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.13](https://github.com/gajojr/invoice-app/compare/v0.1.12...v0.1.13) (2021-06-26)
+
+
+### Features
+
+* connect to db is now possible ([8b603db](https://github.com/gajojr/invoice-app/commit/8b603db4098b941f801bbd3c677598af7cc37e09))
+
 ### [0.1.12](https://github.com/gajojr/invoice-app/compare/v0.1.11...v0.1.12) (2021-06-26)
 
 
