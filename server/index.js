@@ -25,36 +25,22 @@ app.use(cors());
 app.use(serve(path.join(__dirname, '/public')));
 app.use(router.routes()).use(router.allowedMethods());
 
-router.get('/register', async(ctx) => {
-    client.connect();
-
-    client.query('SELECT * FROM Users', (err, result) => {
-        if (!err) {
-            console.log(result.rows);
-        }
-
-        client.end();
-    });
-
-    ctx.status = 200;
-    ctx.body = 'dobar dan';
-});
-
 router.post('/register', async(ctx) => {
-    const body = ctx.request.body;
+    const body = await ctx.request.body;
     console.log(body);
-    ctx.status = 200;
 
-    client.connect();
+    await client.connect();
 
-    client.query(
+    await client.query(
         `
         INSERT INTO Users(name, lastname, password, username, address, city, postal_code, company, pib, giro_account, date_of_making, email, role, document_location)
-        VALUES (${body.firstName}, ${body.lastName}, ${body.password}, ${body.username}, ${body.address}, ${body.city}, ${body.postalCode}, ${body.companyName}, ${body.pib}, ${body.giroAccount}, CURRENT_DATE, ${body.email}, 'user', 'docs/image.jpg');
+        VALUES ('${body.firstName}', '${body.lastName}', '${body.password}', '${body.username}', '${body.address}', '${body.city}', '${body.postalCode}', '${body.companyName}', '${body.pib}', '${body.giroAccount}', CURRENT_DATE, '${body.email}', 'user', 'docs/image.jpg');
         `
     );
 
-    client.end();
+    await client.end();
+
+    ctx.status = 200;
 });
 
 // app.use(ctx => {
