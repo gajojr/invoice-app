@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/gajojr/invoice-app/compare/v0.1.11...v0.1.12) (2021-06-26)
+
+
+### Features
+
+* data is now sent to the server and server can work with it; install pg package to work with postgresql ([da5750c](https://github.com/gajojr/invoice-app/commit/da5750c54759fb7d28c91cb02f5ddb67cea29e57))
+
 ### [0.1.11](https://github.com/gajojr/invoice-app/compare/v0.1.10...v0.1.11) (2021-06-26)
 
 
