@@ -5,4 +5,8 @@ export const RegisterPageContainer = styled.main`
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    @media (max-width: 575px) {
+        align-items: flex-start;
+    }
 `;

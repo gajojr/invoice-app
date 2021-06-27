@@ -3,8 +3,7 @@ const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const bodyParser = require('koa-body-parser');
 const cors = require('@koa/cors');
-const serve = require('koa-static');
-const path = require('path');
+const helmet = require('koa-helmet');
 const { Client } = require('pg');
 
 const app = new Koa();
@@ -22,7 +21,7 @@ const client = new Client({
 
 app.use(bodyParser());
 app.use(cors());
-app.use(serve(path.join(__dirname, '/public')));
+app.use(helmet());
 app.use(router.routes()).use(router.allowedMethods());
 
 router.post('/register', async(ctx) => {
@@ -42,10 +41,6 @@ router.post('/register', async(ctx) => {
 
     ctx.status = 200;
 });
-
-// app.use(ctx => {
-//     ctx.body = { msg: 'Hello Koa' };
-// });
 
 app.listen(PORT, () => {
     console.log(`listenining on port: ${PORT}`);
