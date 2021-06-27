@@ -1,4 +1,4 @@
-export interface FormData {
+export interface UserSchema {
     firstName: string;
     lastName: string;
     username: string;

@@ -5,9 +5,11 @@ const bodyParser = require('koa-body-parser');
 const cors = require('@koa/cors');
 const helmet = require('koa-helmet');
 const { Client } = require('pg');
+const multer = require('@koa/multer');
 
 const app = new Koa();
 const router = new KoaRouter();
+const upload = multer({ dest: './server/uploads' });
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,9 +26,13 @@ app.use(cors());
 app.use(helmet());
 app.use(router.routes()).use(router.allowedMethods());
 
-router.post('/register', async(ctx) => {
+router.post('/register', upload.single('avatar'), async(ctx) => {
     const body = await ctx.request.body;
     console.log(body);
+    // console.log('ctx.request.files', ctx.request.file);
+    // console.log('ctx.files', ctx.file);
+    // console.log(Object.keys(body.avatar));
+    // console.log(Object.values(body.avatar));
 
     await client.connect();
 

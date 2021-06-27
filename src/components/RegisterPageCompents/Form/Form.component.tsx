@@ -6,35 +6,44 @@ import { FormElement, FormCaption, StyledButton, UploadButton } from './Form.sty
 import { Input, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { FormData } from './UserSchema';
+// import { UserSchema } from './UserSchema';
 
 const Form = () => {
     const [files, setFiles] = useState<File[]>([]);
 
     const props = {
-        name: 'file',
         beforeUpload: (file: File) => {
             setFiles([file]);
-            return false;
         },
         onRemove: (file: any) => {
             setFiles([]);
         },
-        onChange(info: any) {
-            console.log(info.file.status)
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
+        onChange: (info: any) => {
+            if (info.file.status === 'done') {
+                console.log('usao u done');
+                console.log(info.file.status)
+                message.success('file uploaded');
             }
-            // if (info.file.status === 'done') {
-            //     message.success(`${info.file.name} file uploaded successfully`);
-            // } else if (info.file.status === 'error') {
-            //     message.error(`${info.file.name} file upload failed.`);
-            // }
+        },
+        customRequest: (options: any) => {
+            console.log('usao sam u custom request');
+            setTimeout(() => {
+                // options.onSuccess('ok', 'http://localhost:5000/register'); // xhr will be defined
+                options.onSuccess(); // xhr won't be defined
+            }, 0);
         }
     };
 
-    // change values type to FormData
+    // change values type to UserSchema
     const onFinish = (values: any) => {
+        console.log('usao u onFinish');
+        console.log('values', values);
+
+        const formData = new FormData();
+        for (const name in values) {
+            formData.append(name, values[name]); // there should be values.avatar which is a File object
+        }
+
         if (!files.length) {
             message.error('File upload is required!');
             return;
@@ -44,9 +53,8 @@ const Form = () => {
             message.error('Passwords don\'t match!');
             return;
         }
-        console.log(values);
 
-        axios.post('http://localhost:5000/register', values);
+        axios.post('http://localhost:5000/register', formData);
     }
 
     return (
@@ -224,13 +232,20 @@ const Form = () => {
                 <Input />
             </FormElement.Item>
 
-            <Upload
-                accept=".pdf, .jpg, .png"
-                {...props}
+            <FormElement.Item
+                name="avatar"
+                valuePropName="fileList"
+                getValueFromEvent={options => options.fileList}
             >
-                Upload .pdf, .jpg or .png file
-                <UploadButton disabled={files.length ? true : false} icon={<UploadOutlined />}>Click to Upload</UploadButton>
-            </Upload>
+                <Upload
+                    accept=".pdf, .jpg, .png"
+                    maxCount={1}
+                    {...props}
+                >
+                    Upload .pdf, .jpg or .png file
+                    <UploadButton disabled={files.length ? true : false} icon={<UploadOutlined />}>Click to Upload</UploadButton>
+                </Upload>
+            </FormElement.Item>
 
             <StyledButton htmlType="submit">Register</StyledButton>
         </FormElement>
