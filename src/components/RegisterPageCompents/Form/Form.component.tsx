@@ -28,8 +28,8 @@ const Form = () => {
         customRequest: (options: any) => {
             console.log('usao sam u custom request');
             setTimeout(() => {
-                // options.onSuccess('ok', 'http://localhost:5000/register'); // xhr will be defined
-                options.onSuccess(); // xhr won't be defined
+                options.onSuccess('ok', 'http://localhost:5000/register'); // xhr will be defined
+                // options.onSuccess(); // xhr won't be defined
             }, 0);
         }
     };
