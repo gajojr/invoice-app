@@ -6,6 +6,7 @@ const cors = require('@koa/cors');
 const helmet = require('koa-helmet');
 const { Client } = require('pg');
 const multer = require('@koa/multer');
+const bcrypt = require('bcrypt');
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -30,15 +31,18 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
     const body = await ctx.request.body;
     // file path is not in body
     const filePath = ctx.request.file.path;
+    // hash the password for security
+    const hashedPassword = await bcrypt.hash(body.password, 10);
     console.log(body);
     console.log(ctx.request.file.path);
+    console.log(hashedPassword);
 
     await client.connect();
 
     await client.query(
         `
         INSERT INTO Users(name, lastname, password, username, address, city, postal_code, company, pib, giro_account, date_of_making, email, role, document_location)
-        VALUES ('${body.firstName}', '${body.lastName}', '${body.password}', '${body.username}', '${body.address}', '${body.city}', '${body.postalCode}', '${body.companyName}', '${body.pib}', '${body.giroAccount}', CURRENT_DATE, '${body.email}', 'user', '${filePath}');
+        VALUES ('${body.firstName}', '${body.lastName}', '${hashedPassword}', '${body.username}', '${body.address}', '${body.city}', '${body.postalCode}', '${body.companyName}', '${body.pib}', '${body.giroAccount}', CURRENT_DATE, '${body.email}', 'user', '${filePath}');
         `
     );
 
