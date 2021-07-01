@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.19](https://github.com/gajojr/invoice-app/compare/v0.1.18...v0.1.19) (2021-07-01)
+
+
+### Features
+
+* implement hashing for passwords when storing data in db ([67b6a65](https://github.com/gajojr/invoice-app/commit/67b6a65b6a569fd2cb7fcbb43c91e117fed952bc))
+
 ### [0.1.18](https://github.com/gajojr/invoice-app/compare/v0.1.17...v0.1.18) (2021-07-01)
 
 
