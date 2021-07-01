@@ -20,16 +20,13 @@ const Form = () => {
         },
         onChange: (info: any) => {
             if (info.file.status === 'done') {
-                console.log('usao u done');
-                console.log(info.file.status)
                 message.success('file uploaded');
             }
         },
         customRequest: (options: any) => {
             console.log('usao sam u custom request');
             setTimeout(() => {
-                options.onSuccess('ok', 'http://localhost:5000/register'); // xhr will be defined
-                // options.onSuccess(); // xhr won't be defined
+                options.onSuccess('ok');
             }, 0);
         }
     };
@@ -234,8 +231,8 @@ const Form = () => {
 
             <FormElement.Item
                 name="avatar"
-                valuePropName="fileList"
-                getValueFromEvent={options => options.fileList}
+                valuePropName="file"
+                getValueFromEvent={options => options.file.originFileObj}
             >
                 <Upload
                     accept=".pdf, .jpg, .png"
