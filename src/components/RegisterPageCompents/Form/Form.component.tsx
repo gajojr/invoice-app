@@ -50,7 +50,19 @@ const Form = () => {
             return;
         }
 
-        axios.post('http://localhost:5000/register', formData);
+        axios.post('http://localhost:5000/register', formData)
+            .then(res => {
+                console.log(res)
+                if (res.data === 'success') {
+                    message.success('registered successfully');
+                } else {
+                    message.error(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                message.error('register failed');
+            });
     }
 
     return (
