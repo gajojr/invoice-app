@@ -52,7 +52,7 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
             `
         );
 
-        if (usernameCheck && usernameCheck.rows && usernameCheck.rows.length) {
+        if (usernameCheck?.rows?.length) {
             console.log('usao u username check');
             return ctx.body = 'user with this username already exists!';
             // return ctx.status = 204;
@@ -65,7 +65,7 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
             `
         );
 
-        if (emailCheck && emailCheck.rows && emailCheck.rows.length) {
+        if (emailCheck?.rows?.length) {
             console.log('usao u email check');
             return ctx.body = 'user with this email address already exists!';
             // return ctx.status = 204;
