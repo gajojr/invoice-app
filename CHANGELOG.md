@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.20](https://github.com/gajojr/invoice-app/compare/v0.1.19...v0.1.20) (2021-07-02)
+
+
+### Bug Fixes
+
+* add error handleing on server and client if there is already username or email ([a11f3f1](https://github.com/gajojr/invoice-app/commit/a11f3f1fcc0abfaec7120a9cc80b9cfd2fbf667b))
+
 ### [0.1.19](https://github.com/gajojr/invoice-app/compare/v0.1.18...v0.1.19) (2021-07-01)
 
 
