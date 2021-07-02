@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.22](https://github.com/gajojr/invoice-app/compare/v0.1.21...v0.1.22) (2021-07-02)
+
+
+### Features
+
+* add Profile Page and user is redirected to profile page when register is successful ([713b011](https://github.com/gajojr/invoice-app/commit/713b011c81002ba34c7813629b915d8383f3cead))
+
 ### [0.1.21](https://github.com/gajojr/invoice-app/compare/v0.1.20...v0.1.21) (2021-07-02)
 
 ### [0.1.20](https://github.com/gajojr/invoice-app/compare/v0.1.19...v0.1.20) (2021-07-02)
