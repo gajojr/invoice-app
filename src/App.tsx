@@ -7,6 +7,7 @@ import './App.less';
 
 import HomePage from './pages/HomePages/HomePage.page';
 import RegisterPage from './pages/RegisterPage/RegisterPage.page';
+import ProfilePage from './pages/ProfilePage/ProfilePage.component';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         <Route path="/log-in">
           {/* <LoginPage /> */}
           <div>Log In Page</div>
+        </Route>
+        <Route path="/profile-page">
+          <ProfilePage />
         </Route>
       </Switch>
     </Router>

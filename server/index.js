@@ -22,6 +22,8 @@ const client = new Client({
     database: process.env.DB_NAME
 });
 
+client.connect(err => console.log(err));
+
 app.use(bodyParser());
 app.use(cors());
 app.use(helmet());
@@ -38,13 +40,6 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
         console.log(ctx.request.file.path);
         console.log(hashedPassword);
 
-        await client.connect(err => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-        });
-
         const usernameCheck = await client.query(
             `
                 SELECT * FROM Users 
@@ -54,7 +49,8 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
 
         if (usernameCheck?.rows?.length) {
             console.log('usao u username check');
-            return ctx.body = 'user with this username already exists!';
+            return ctx.body = { error: 'user with this username already exists!' };
+            // return ctx.body = 'user with this username already exists!';
             // return ctx.status = 204;
         }
 
@@ -67,7 +63,8 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
 
         if (emailCheck?.rows?.length) {
             console.log('usao u email check');
-            return ctx.body = 'user with this email address already exists!';
+            return ctx.body = { error: 'user with this email already exists!' };
+            // return ctx.body = 'user with this email address already exists!';
             // return ctx.status = 204;
         }
 
@@ -78,9 +75,9 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
         `
         );
 
-        // await client.end();
+        await client.end();
 
-        ctx.body = 'success';
+        ctx.body = {...body, error: null };
     } catch (err) {
         console.log(err);
     }

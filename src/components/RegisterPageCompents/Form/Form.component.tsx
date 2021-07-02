@@ -53,10 +53,13 @@ const Form = () => {
         axios.post('http://localhost:5000/register', formData)
             .then(res => {
                 console.log(res)
-                if (res.data === 'success') {
+                if (!res.data.error) {
                     message.success('registered successfully');
+                    localStorage.setItem('username', res.data.username);
+                    window.location.href = '/profile-page';
                 } else {
-                    message.error(res.data);
+                    console.log(res.data.error)
+                    message.error(res.data.error);
                 }
             })
             .catch(err => {
