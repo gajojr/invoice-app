@@ -1,6 +1,6 @@
 {
     "name": "invoice",
-    "version": "0.1.22",
+    "version": "0.1.23",
     "private": true,
     "dependencies": {
         "@craco/craco": "^5.4.0",

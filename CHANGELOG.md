@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.23](https://github.com/gajojr/invoice-app/compare/v0.1.22...v0.1.23) (2021-07-03)
+
+
+### Features
+
+* add route get-profile-data to get user info for profile page ([20c02ec](https://github.com/gajojr/invoice-app/commit/20c02ecf14dbe676a3a04f2720dcf6202dcb378e))
+
 ### [0.1.22](https://github.com/gajojr/invoice-app/compare/v0.1.21...v0.1.22) (2021-07-02)
 
 
