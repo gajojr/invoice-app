@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.24](https://github.com/gajojr/invoice-app/compare/v0.1.23...v0.1.24) (2021-07-03)
+
+
+### Bug Fixes
+
+* user is now redirected to home page if he isn't logged in ([b466790](https://github.com/gajojr/invoice-app/commit/b466790bea60de023fa9dc5fb9e02b6c2b2232f2))
+
 ### [0.1.23](https://github.com/gajojr/invoice-app/compare/v0.1.22...v0.1.23) (2021-07-03)
 
 
