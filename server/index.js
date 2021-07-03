@@ -7,6 +7,7 @@ const helmet = require('koa-helmet');
 const { Client } = require('pg');
 const multer = require('@koa/multer');
 const bcrypt = require('bcrypt');
+const { removeFile } = require('./utils/utils');
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -36,9 +37,6 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
         const filePath = ctx.request.file.path;
         // hash the password for security
         const hashedPassword = await bcrypt.hash(body.password, 10);
-        console.log(body);
-        console.log(ctx.request.file.path);
-        console.log(hashedPassword);
 
         const usernameCheck = await client.query(
             `
@@ -49,6 +47,7 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
 
         if (usernameCheck?.rows?.length) {
             console.log('usao u username check');
+            removeFile(filePath);
             return ctx.body = { error: 'user with this username already exists!' };
             // return ctx.body = 'user with this username already exists!';
             // return ctx.status = 204;
@@ -63,6 +62,7 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
 
         if (emailCheck?.rows?.length) {
             console.log('usao u email check');
+            removeFile(filePath);
             return ctx.body = { error: 'user with this email already exists!' };
             // return ctx.body = 'user with this email address already exists!';
             // return ctx.status = 204;
@@ -94,7 +94,7 @@ router.get('/get-profile-data', async(ctx) => {
                 WHERE username = '${username}' 
             `
         );
-        console.log(username);
+
         ctx.body = { avatarURL: res?.rows[0]?.document_location };
     } catch (err) {
         console.log(err);
