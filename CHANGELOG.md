@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.25](https://github.com/gajojr/invoice-app/compare/v0.1.24...v0.1.25) (2021-07-03)
+
+
+### Bug Fixes
+
+* avatar is deleted if register fails ([cf90f33](https://github.com/gajojr/invoice-app/commit/cf90f3324f7de7968d50e93bfc833049d632f3be))
+
 ### [0.1.24](https://github.com/gajojr/invoice-app/compare/v0.1.23...v0.1.24) (2021-07-03)
 
 
