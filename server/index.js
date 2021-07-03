@@ -38,14 +38,14 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
         // hash the password for security
         const hashedPassword = await bcrypt.hash(body.password, 10);
 
-        const usernameCheck = await client.query(
+        const usernameQuery = await client.query(
             `
                 SELECT * FROM Users 
                 WHERE username = '${body.username}';
             `
         );
 
-        if (usernameCheck?.rows?.length) {
+        if (usernameQuery?.rows?.length) {
             console.log('usao u username check');
             removeFile(filePath);
             return ctx.body = { error: 'user with this username already exists!' };
@@ -53,14 +53,14 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
             // return ctx.status = 204;
         }
 
-        const emailCheck = await client.query(
+        const emailQuery = await client.query(
             `
                 SELECT * FROM Users 
                 WHERE email = '${body.email}';
             `
         );
 
-        if (emailCheck?.rows?.length) {
+        if (emailQuery?.rows?.length) {
             console.log('usao u email check');
             removeFile(filePath);
             return ctx.body = { error: 'user with this email already exists!' };
@@ -96,6 +96,52 @@ router.get('/get-profile-data', async(ctx) => {
         );
 
         ctx.body = { avatarURL: res?.rows[0]?.document_location };
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.get('/get-avatar', async(ctx) => {
+    try {
+        console.log('ide gas', ctx.query.avatarURL);
+        ctx.attachment(`./uploads/${ctx.query.avatarURL}`);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.post('/log-in', async(ctx) => {
+    try {
+        const { username, password } = await ctx.request.body;
+
+        const usernameQuery = await client.query(
+            `
+                SELECT username FROM Users 
+                WHERE username = '${username}';
+            `
+        );
+
+        if (!usernameQuery.rows.length) {
+            console.log('usao u username check');
+            return ctx.body = { error: 'user with this username doesn\'t exist' };
+        }
+
+        const passwordQuery = await client.query(
+            `
+                SELECT password FROM Users
+                WHERE username = '${username}';
+            `
+        )
+
+        const passwordFromDb = passwordQuery.rows[0].password;
+
+        const comparePassword = await bcrypt.compare(password, passwordFromDb);
+
+        if (comparePassword) {
+            ctx.body = { username };
+        } else {
+            ctx.body = { error: 'username and password don\'t match!' }
+        }
     } catch (err) {
         console.log(err);
     }

@@ -7,6 +7,7 @@ import './App.less';
 
 import HomePage from './pages/HomePages/HomePage.page';
 import RegisterPage from './pages/RegisterPage/RegisterPage.page';
+import LogInPage from './pages/LogInPage/LogInPage.page';
 import ProfilePage from './pages/ProfilePage/ProfilePage.component';
 
 function App() {
@@ -20,8 +21,7 @@ function App() {
           <RegisterPage />
         </Route>
         <Route path="/log-in">
-          {/* <LoginPage /> */}
-          <div>Log In Page</div>
+          <LogInPage />
         </Route>
         <Route path="/profile-page">
           <ProfilePage />
