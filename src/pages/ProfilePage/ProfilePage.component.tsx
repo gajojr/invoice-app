@@ -5,10 +5,15 @@ const ProfilePage = () => {
     const [avatarURL, setAvatarURL] = useState<string>('');
 
     useEffect(() => {
+        if (!sessionStorage.getItem('username')) {
+            // redirect if user isn't logged in
+            window.location.href = '/';
+        }
+
         (async function () {
             const response = await axios.get('http://localhost:5000/get-profile-data', {
                 params: {
-                    username: localStorage.getItem('username')
+                    username: sessionStorage.getItem('username')
                 }
             });
             console.log(response);

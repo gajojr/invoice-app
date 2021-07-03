@@ -55,7 +55,7 @@ const Form = () => {
                 console.log(res)
                 if (!res.data.error) {
                     message.success('registered successfully');
-                    localStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('username', res.data.username);
                     window.location.href = '/profile-page';
                 } else {
                     console.log(res.data.error)
