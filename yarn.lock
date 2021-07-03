@@ -8231,7 +8231,7 @@
     "methods" "^1.1.2"
     "path-to-regexp" "^6.1.0"
 
-"koa-send@^5.0.0":
+"koa-send@^5.0.0", "koa-send@^5.0.1":
   "integrity" "sha512-tmcyQ/wXXuxpDxyNXv5yNNkdAMdFRqwtegBXUaowiQzUKqJehttS0x2j0eOZDQAyloAth5w6wwBImnFzkUz3pQ=="
   "resolved" "https://registry.npmjs.org/koa-send/-/koa-send-5.0.1.tgz"
   "version" "5.0.1"

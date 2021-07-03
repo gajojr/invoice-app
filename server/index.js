@@ -7,6 +7,7 @@ const helmet = require('koa-helmet');
 const { Client } = require('pg');
 const multer = require('@koa/multer');
 const bcrypt = require('bcrypt');
+const send = require('koa-send');
 const { removeFile } = require('./utils/utils');
 
 const app = new Koa();
@@ -23,7 +24,11 @@ const client = new Client({
     database: process.env.DB_NAME
 });
 
-client.connect(err => console.log(err));
+client.connect(err => {
+    if (err) {
+        console.log(err)
+    }
+});
 
 app.use(bodyParser());
 app.use(cors());
@@ -103,8 +108,19 @@ router.get('/get-profile-data', async(ctx) => {
 
 router.get('/get-avatar', async(ctx) => {
     try {
-        console.log('ide gas', ctx.query.avatarURL);
-        ctx.attachment(`./uploads/${ctx.query.avatarURL}`);
+        const username = ctx.query.username;
+
+        const res = await client.query(
+            `
+                SELECT * 
+                FROM Users
+                WHERE username = '${username}' 
+            `
+        );
+
+        const avatarURL = res.rows[0].document_location;
+
+        await send(ctx, avatarURL);
     } catch (err) {
         console.log(err);
     }
