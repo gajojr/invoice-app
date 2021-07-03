@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.27](https://github.com/gajojr/invoice-app/compare/v0.1.26...v0.1.27) (2021-07-03)
+
+
+### Bug Fixes
+
+* profile picture is now loaded on profile page ([ecff7e5](https://github.com/gajojr/invoice-app/commit/ecff7e52c3ea8511dcf4da22d747685093f046a4))
+
 ### [0.1.26](https://github.com/gajojr/invoice-app/compare/v0.1.25...v0.1.26) (2021-07-03)
 
 
