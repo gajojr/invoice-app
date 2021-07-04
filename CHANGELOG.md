@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.28](https://github.com/gajojr/invoice-app/compare/v0.1.27...v0.1.28) (2021-07-04)
+
+
+### Features
+
+* add profile card on profile page and log off is working ([0ca2595](https://github.com/gajojr/invoice-app/commit/0ca259534152e904c1cdc6d65e3db6ea118871ce))
+
 ### [0.1.27](https://github.com/gajojr/invoice-app/compare/v0.1.26...v0.1.27) (2021-07-03)
 
 
