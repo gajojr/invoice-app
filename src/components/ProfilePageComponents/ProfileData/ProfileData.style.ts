@@ -5,6 +5,7 @@ export const ProfileCard = styled.div`
     background-color: #9fbedf;
     display: flex;
     flex-direction: column;
+    align-self: flex-end;
     padding: 5px;
     border-radius: 5px;
 `;

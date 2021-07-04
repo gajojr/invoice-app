@@ -145,6 +145,29 @@ router.post('/log-in', async(ctx) => {
     }
 });
 
+router.get('/invoices', async(ctx) => {
+    try {
+        const username = ctx.query.username;
+
+        console.log(username)
+
+        const accommodations = await client.query(
+            `
+            SELECT * FROM accommodations
+            JOIN users
+            ON users.id = accommodations.user_id
+            WHERE users.username = '${username}'; 
+        `
+        );
+
+        console.log(accommodations.rows);
+
+        ctx.body = accommodations.rows;
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`listenining on port: ${PORT}`);
 });
