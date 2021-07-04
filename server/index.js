@@ -88,24 +88,6 @@ router.post('/register', upload.single('avatar'), async(ctx) => {
     }
 });
 
-router.get('/get-profile-data', async(ctx) => {
-    try {
-        const username = ctx.query.username;
-
-        const res = await client.query(
-            `
-                SELECT * 
-                FROM Users
-                WHERE username = '${username}' 
-            `
-        );
-
-        ctx.body = { avatarURL: res?.rows[0]?.document_location };
-    } catch (err) {
-        console.log(err);
-    }
-});
-
 router.get('/get-avatar', async(ctx) => {
     try {
         const username = ctx.query.username;
