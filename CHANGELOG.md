@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.29](https://github.com/gajojr/invoice-app/compare/v0.1.28...v0.1.29) (2021-07-04)
+
+
+### Features
+
+* add route for fetching accommodations ([5e77da5](https://github.com/gajojr/invoice-app/commit/5e77da5e9f8b37e0d1f5f38eb4ca94a054f84ce6))
+
 ### [0.1.28](https://github.com/gajojr/invoice-app/compare/v0.1.27...v0.1.28) (2021-07-04)
 
 
