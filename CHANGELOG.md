@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.35](https://github.com/gajojr/invoice-app/compare/v0.1.34...v0.1.35) (2021-07-06)
+
+
+### Features
+
+* add template for InvoiceCard(delete and view button which aren't working currently) ([b134a38](https://github.com/gajojr/invoice-app/commit/b134a38005cddcefe0fc859ba750b7a1befa870c))
+
 ### [0.1.34](https://github.com/gajojr/invoice-app/compare/v0.1.33...v0.1.34) (2021-07-06)
 
 ### [0.1.31](https://github.com/gajojr/invoice-app/compare/v0.1.30...v0.1.31) (2021-07-06)
