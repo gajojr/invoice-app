@@ -149,20 +149,15 @@ router.get('/invoices', async(ctx) => {
     try {
         const username = ctx.query.username;
 
-        console.log(username)
-
-        const userID = await client.query(
-            `
-                SELECT id FROM users
-                WHERE username = '${username}'
-            `
-        );
+        console.log(username);
 
         const invoices = await client.query(
             `
-            SELECT id, name FROM invoices
-            WHERE user_id = '${userID.rows[0].id}'; 
-        `
+                SELECT invoices.id AS id, invoices.name AS name FROM invoices
+                JOIN users 
+                    ON users.id = invoices.user_id
+                WHERE username = '${username}'; 
+            `
         );
 
         console.log(invoices.rows);
