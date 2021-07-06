@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { InvoiceInterface } from '../InvoiceInterface';
+
+import InvoiceCard from '../InvoiceCard/InvoiceCard.component';
+
 const InvoicesList = () => {
     const [invoices, setInvoices] = useState<any>([]);
 
@@ -23,9 +27,7 @@ const InvoicesList = () => {
     return (
         <div>
             <span>Your invoices:</span>
-            {invoices.map((invoice: any, idx: number) => {
-                return <div key={idx}>{invoice.client_address}</div>
-            })}
+            {invoices.map((invoice: InvoiceInterface) => <InvoiceCard key={invoice.id} invoice={invoice} />)}
         </div>
     )
 }
