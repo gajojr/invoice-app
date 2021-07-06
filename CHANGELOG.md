@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.36](https://github.com/gajojr/invoice-app/compare/v0.1.35...v0.1.36) (2021-07-06)
+
+
+### Features
+
+* add update button on invoicecard component ([796752f](https://github.com/gajojr/invoice-app/commit/796752f62d31dbe01b673625532365123b3e88de))
+
 ### [0.1.35](https://github.com/gajojr/invoice-app/compare/v0.1.34...v0.1.35) (2021-07-06)
 
 
