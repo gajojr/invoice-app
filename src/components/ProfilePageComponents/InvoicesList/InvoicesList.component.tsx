@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { InvoiceInterface } from '../InvoiceInterface';
-
+import { CardContainer } from './InvoicesList.styles';
 import InvoiceCard from '../InvoiceCard/InvoiceCard.component';
 
 const InvoicesList = () => {
@@ -27,7 +27,9 @@ const InvoicesList = () => {
     return (
         <div>
             <span>Your invoices:</span>
-            {invoices.map((invoice: InvoiceInterface) => <InvoiceCard key={invoice.id} invoice={invoice} />)}
+            <CardContainer>
+                {invoices.map((invoice: InvoiceInterface) => <InvoiceCard key={invoice.id} invoice={invoice} />)}
+            </CardContainer>
         </div>
     )
 }

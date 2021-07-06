@@ -1,1 +1,20 @@
 import styled from 'styled-components';
+
+import { Button } from 'antd';
+
+export const Card = styled.article`
+    display: flex;
+    border: 2px solid black;
+    min-width: 25vw;
+    padding: 5px;
+`;
+
+export const DeleteButton = styled(Button)`
+    margin-left: 5px;
+    background-color: #ff3333;
+    border: none;
+
+    &:hover {
+        background-color: rgba(255, 51, 51, .8);
+    }
+`;
