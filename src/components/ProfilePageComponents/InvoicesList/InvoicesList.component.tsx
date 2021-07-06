@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const InvoicesList = () => {
-    const [accommodations, setAccommations] = useState<any>([]);
+    const [invoices, setInvoices] = useState<any>([]);
 
     useEffect(() => {
         (async () => {
@@ -12,18 +12,19 @@ const InvoicesList = () => {
                 }
             });
             console.log(response);
+            setInvoices(response.data);
         })();
     }, []);
 
-    if (!accommodations.length) {
+    if (!invoices.length) {
         return <span>You don't have any invoices yet</span>
     }
 
     return (
         <div>
             <span>Your invoices:</span>
-            {accommodations.map((accommodation: any) => {
-                return <div>{accommodation.unit}</div>
+            {invoices.map((invoice: any, idx: number) => {
+                return <div key={idx}>{invoice.client_address}</div>
             })}
         </div>
     )

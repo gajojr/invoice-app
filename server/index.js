@@ -151,18 +151,18 @@ router.get('/invoices', async(ctx) => {
 
         console.log(username)
 
-        const accommodations = await client.query(
+        const invoices = await client.query(
             `
-            SELECT * FROM accommodations
+            SELECT * FROM invoices
             JOIN users
-            ON users.id = accommodations.user_id
+            ON users.id = invoices.user_id
             WHERE users.username = '${username}'; 
         `
         );
 
-        console.log(accommodations.rows);
+        console.log(invoices.rows);
 
-        ctx.body = accommodations.rows;
+        ctx.body = invoices.rows;
     } catch (err) {
         console.log(err);
     }
