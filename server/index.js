@@ -149,8 +149,6 @@ router.get('/invoices', async(ctx) => {
     try {
         const username = ctx.query.username;
 
-        console.log(username);
-
         const invoices = await client.query(
             `
                 SELECT invoices.id AS id, invoices.name AS name FROM invoices
@@ -159,8 +157,6 @@ router.get('/invoices', async(ctx) => {
                 WHERE username = '${username}'; 
             `
         );
-
-        console.log(invoices.rows);
 
         ctx.body = invoices.rows;
     } catch (err) {
