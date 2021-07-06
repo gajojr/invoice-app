@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { InvoiceInterface } from '../InvoiceInterface';
 
 import { Card } from 'antd';
-import { DeleteButton } from './InvoiceCard.style';
+import { DeleteButton, UpdateButton } from './InvoiceCard.style';
 
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     const deleteInvoice = (id: number) => {
@@ -12,11 +12,16 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
         }
     }
 
+    const updateInvoice = (id: number) => {
+        console.log(`invoice with id: ${id} updated`);
+    }
+
     return (
-        <Card size="small" title={invoice.name} extra={<div><Link to="/">View</Link><DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton></div>} style={{ width: 300 }}>
-            <p>{invoice.city}</p>
-            <p>{invoice.address}</p>
-            <p>{invoice.pib}</p>
+        <Card size="small" title={invoice.name} extra={<div><Link to="/">View</Link><UpdateButton onClick={() => updateInvoice(invoice.id)}>Update</UpdateButton><DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton></div>} style={{ width: 300 }}>
+            <p>City: {invoice.city}</p>
+            <p>Address: {invoice.address}</p>
+            <p>PIB: {invoice.pib}</p>
+            <Link to='/'><p style={{ color: '#000' }}>...</p></Link>
         </Card>
     )
 }

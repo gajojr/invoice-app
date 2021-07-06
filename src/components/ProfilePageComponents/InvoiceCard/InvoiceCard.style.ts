@@ -15,6 +15,17 @@ export const DeleteButton = styled(Button)`
     border: none;
 
     &:hover {
-        background-color: rgba(255, 51, 51, .8);
+        background-color: #e60000;
+    }
+`;
+
+export const UpdateButton = styled(Button)`
+    margin-left: 5px;
+    background-color: #00e600;
+    border: none;
+
+    &:hover {
+        background-color:#00b300;
+        color: #fff;
     }
 `;
