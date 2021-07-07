@@ -45,6 +45,7 @@ const InvoicePaper = ({ id }: { id: string }) => {
             <hr />
 
             <div>To:</div>
+            <p><b>Company: {invoiceData.to_company}</b></p>
             <p>Address: {invoiceData.to_address}</p>
             <p>City: {invoiceData.to_city}</p>
             <p>PIB: {invoiceData.to_pib}</p>
