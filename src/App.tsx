@@ -9,6 +9,7 @@ import HomePage from './pages/HomePages/HomePage.page';
 import RegisterPage from './pages/RegisterPage/RegisterPage.page';
 import LogInPage from './pages/LogInPage/LogInPage.page';
 import ProfilePage from './pages/ProfilePage/ProfilePage.page';
+import InvoicePage from './pages/InvoicePage/InvoicePage.page'
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route path="/profile-page">
           <ProfilePage />
+        </Route>
+        <Route path="/invoices/:id">
+          <InvoicePage />
         </Route>
       </Switch>
     </Router>

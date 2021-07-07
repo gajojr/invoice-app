@@ -17,7 +17,18 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     }
 
     return (
-        <Card size="small" title={invoice.name} extra={<div><Link to="/">View</Link><UpdateButton onClick={() => updateInvoice(invoice.id)}>Update</UpdateButton><DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton></div>} style={{ width: 300 }}>
+        <Card
+            size="small"
+            title={invoice.name}
+            extra={
+                <div>
+                    <Link to={`/invoices/${invoice.id}`}>View</Link>
+                    <UpdateButton onClick={() => updateInvoice(invoice.id)}>Update</UpdateButton>
+                    <DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton>
+                </div>
+            }
+            style={{ width: 300 }}
+        >
             <p>City: {invoice.city}</p>
             <p>Address: {invoice.address}</p>
             <p>PIB: {invoice.pib}</p>
