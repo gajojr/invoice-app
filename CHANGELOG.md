@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.39](https://github.com/gajojr/invoice-app/compare/v0.1.38...v0.1.39) (2021-07-07)
+
 ### [0.1.38](https://github.com/gajojr/invoice-app/compare/v0.1.37...v0.1.38) (2021-07-07)
 
 
