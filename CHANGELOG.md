@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.40](https://github.com/gajojr/invoice-app/compare/v0.1.39...v0.1.40) (2021-07-07)
+
+
+### Features
+
+* add typescript checking to files and split code from InvoicePaper to multiple components ([fb6019e](https://github.com/gajojr/invoice-app/commit/fb6019efb7f2de4c5e7b0da976840fa75d0dc0bf))
+
 ### [0.1.39](https://github.com/gajojr/invoice-app/compare/v0.1.38...v0.1.39) (2021-07-07)
 
 ### [0.1.38](https://github.com/gajojr/invoice-app/compare/v0.1.37...v0.1.38) (2021-07-07)
