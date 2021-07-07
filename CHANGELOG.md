@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.37](https://github.com/gajojr/invoice-app/compare/v0.1.36...v0.1.37) (2021-07-07)
+
+
+### Features
+
+* add InvoicePage and setup query for fetching invoice datafrom db ([023a5ab](https://github.com/gajojr/invoice-app/commit/023a5abf666338d4cfb766e150588e796ada5028))
+
 ### [0.1.36](https://github.com/gajojr/invoice-app/compare/v0.1.35...v0.1.36) (2021-07-06)
 
 
