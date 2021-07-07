@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.38](https://github.com/gajojr/invoice-app/compare/v0.1.37...v0.1.38) (2021-07-07)
+
+
+### Features
+
+* show paper for invoice when user views the invoice ([b6bdf53](https://github.com/gajojr/invoice-app/commit/b6bdf5319f57f77fac512df4eb353c4c4513f563))
+
 ### [0.1.37](https://github.com/gajojr/invoice-app/compare/v0.1.36...v0.1.37) (2021-07-07)
 
 
