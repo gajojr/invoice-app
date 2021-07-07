@@ -179,7 +179,7 @@ router.get('/invoices/:id', async(ctx) => {
 
         const services = await client.query(
             `
-                SELECT service_type, unit, amount, price_per_unit, amount * price_per_unit AS price
+                SELECT id, service_type, unit, amount, price_per_unit, amount * price_per_unit AS price
                 FROM services
                 WHERE invoice_id = '${id}';
             `
