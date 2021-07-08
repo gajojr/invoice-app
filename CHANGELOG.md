@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.41](https://github.com/gajojr/invoice-app/compare/v0.1.40...v0.1.41) (2021-07-08)
+
+
+### Features
+
+* add pdf generator for each invoice paper ([4631631](https://github.com/gajojr/invoice-app/commit/4631631be716014553f4eb730712ee2433066248))
+
 ### [0.1.40](https://github.com/gajojr/invoice-app/compare/v0.1.39...v0.1.40) (2021-07-07)
 
 
