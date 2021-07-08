@@ -16,7 +16,7 @@ const GeneratePDFButton = ({ id }: { id: string; }) => {
     }
 
     return (
-        <Button type="primary" onClick={generatePDF}>Generate PDF</Button>
+        <Button type="primary" onClick={generatePDF}>Download PDF</Button>
     )
 }
 

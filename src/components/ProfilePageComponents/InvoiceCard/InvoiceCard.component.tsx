@@ -1,14 +1,23 @@
+import axios from 'axios';
+
 import { Link } from 'react-router-dom';
 
 import { InvoiceInterface } from '../InvoiceInterface';
 
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 import { DeleteButton, UpdateButton } from './InvoiceCard.style';
 
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
-    const deleteInvoice = (id: number) => {
+    const deleteInvoice = async (id: number) => {
         if (window.confirm('do you want to delete this invoice')) {
-            console.log(`invoice with id: ${id} deleted`);
+            const response = await axios.delete(`http://localhost:5000/invoices/${id}`);
+            console.log(response);
+            if (response.status === 200) {
+                message.success('invoice deleted!');
+                window.location.reload();
+            } else {
+                message.error('deleting failed');
+            }
         }
     }
 

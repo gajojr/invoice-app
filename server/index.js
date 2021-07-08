@@ -191,6 +191,23 @@ router.get('/invoices/:id', async(ctx) => {
     }
 });
 
+router.delete('/invoices/:id', async(ctx) => {
+    try {
+        const id = ctx.params.id;
+
+        await client.query(
+            `
+                DELETE FROM invoices
+                WHERE id = '${id}' 
+            `
+        );
+
+        ctx.status = 200;
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`listenining on port: ${PORT}`);
 });
