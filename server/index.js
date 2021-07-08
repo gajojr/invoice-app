@@ -197,6 +197,13 @@ router.delete('/invoices/:id', async(ctx) => {
 
         await client.query(
             `
+                DELETE FROM services
+                WHERE invoice_id = '${id}' 
+            `
+        );
+
+        await client.query(
+            `
                 DELETE FROM invoices
                 WHERE id = '${id}' 
             `
