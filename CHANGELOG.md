@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.45](https://github.com/gajojr/invoice-app/compare/v0.1.44...v0.1.45) (2021-07-08)
+
+
+### Bug Fixes
+
+* delete all services that are connected to deleted invoice ([16e7930](https://github.com/gajojr/invoice-app/commit/16e79305998f60e9c9aa7c2fa94e36a05e68a2bc))
+
 ### [0.1.44](https://github.com/gajojr/invoice-app/compare/v0.1.43...v0.1.44) (2021-07-08)
 
 
