@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.43](https://github.com/gajojr/invoice-app/compare/v0.1.42...v0.1.43) (2021-07-08)
+
+
+### Features
+
+* user can now delete invoice via delete button on every invoice card ([2181451](https://github.com/gajojr/invoice-app/commit/2181451aafeddc47871026fc20a8d66fa8bfdebd))
+
 ### [0.1.42](https://github.com/gajojr/invoice-app/compare/v0.1.41...v0.1.42) (2021-07-08)
 
 ### [0.1.41](https://github.com/gajojr/invoice-app/compare/v0.1.40...v0.1.41) (2021-07-08)
