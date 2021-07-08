@@ -32,7 +32,7 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
             <p>City: {invoice.city}</p>
             <p>Address: {invoice.address}</p>
             <p>PIB: {invoice.pib}</p>
-            <Link to='/'><p style={{ color: '#000' }}>...</p></Link>
+            <Link to={`/invoices/${invoice.id}`}><p style={{ color: '#000' }}>...</p></Link>
         </Card>
     )
 }

@@ -21,11 +21,12 @@ export const DeleteButton = styled(Button)`
 
 export const UpdateButton = styled(Button)`
     margin-left: 5px;
-    background-color: #00e600;
+    background-color:#00b300;
+    color: #fff;
     border: none;
 
     &:hover {
-        background-color:#00b300;
+        background-color: rgba(0, 179, 0, .8);
         color: #fff;
     }
 `;
