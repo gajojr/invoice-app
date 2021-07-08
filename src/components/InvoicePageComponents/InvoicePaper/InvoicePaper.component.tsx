@@ -40,7 +40,8 @@ const InvoicePaper = ({ id }: { id: string }) => {
     }
 
     return (
-        <Paper>
+        // added class name for pdfJs to transform it into pdf
+        <Paper className="invoice-paper">
             <FromUser invoiceData={invoiceData} />
             <ToUser invoiceData={invoiceData} />
             <Services services={services} totalPriceOfAllServices={totalPriceOfAllServices} />
