@@ -50,7 +50,7 @@ const ProfileData = () => {
                 <Image src={avatarURL} width={100} height={100} style={{ borderRadius: '50%', border: '1px solid black' }} alt="avatar" />
             </ProfileInfo>
             <StyledButton onClick={logOff}>log off</StyledButton>
-            <StyledButton onClick={() => console.log('redirecting to /create-invoice page')}>create new invoice</StyledButton>
+            <StyledButton onClick={() => window.location.href = '/create-invoice'}>create new invoice</StyledButton>
         </ProfileCard>
     )
 }

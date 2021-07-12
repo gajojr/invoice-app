@@ -9,7 +9,8 @@ import HomePage from './pages/HomePages/HomePage.page';
 import RegisterPage from './pages/RegisterPage/RegisterPage.page';
 import LogInPage from './pages/LogInPage/LogInPage.page';
 import ProfilePage from './pages/ProfilePage/ProfilePage.page';
-import InvoicePage from './pages/InvoicePage/InvoicePage.page'
+import InvoicePage from './pages/InvoicePage/InvoicePage.page';
+import CreateInvoicePage from './pages/CreateInvoicePage/CreateInvoicePage.page';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/invoices/:id">
           <InvoicePage />
+        </Route>
+        <Route path="/create-invoice">
+          <CreateInvoicePage />
         </Route>
       </Switch>
     </Router>
