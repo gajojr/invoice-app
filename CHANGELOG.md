@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.48](https://github.com/gajojr/invoice-app/compare/v0.1.47...v0.1.48) (2021-07-13)
+
+
+### Features
+
+* user can now create invoice and services will be saved in db ([3c0a44f](https://github.com/gajojr/invoice-app/commit/3c0a44f153d2083850f8f5d15c0ba95d215f5568))
+
 ### [0.1.47](https://github.com/gajojr/invoice-app/compare/v0.1.46...v0.1.47) (2021-07-13)
 
 
