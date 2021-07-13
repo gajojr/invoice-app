@@ -226,14 +226,36 @@ router.post('/create-invoice', async(ctx) => {
             `
         );
 
-        await client.query(
+        const invoiceId = await client.query(
             `
                 INSERT INTO invoices(user_id, name, company_name, client_address, client_city, client_pib, closing_date, stamp_needed, sign_needed, pdv)
-                VALUES(${userId.rows[0].id}, '${body.invoiceName}', '${body.companyName}', '${body.address}', '${body.city}', '${body.pib}', '${body.closingDate}', '${body.stamp}', '${body.sign}', '${body.pdv}');            
+                VALUES(${userId.rows[0].id}, '${body.invoiceName}', '${body.companyName}', '${body.address}', '${body.city}', '${body.pib}', '${body.closingDate}', '${body.stamp}', '${body.sign}', '${body.pdv}');   
+                
+                SELECT CURRVAL(pg_get_serial_sequence('invoices','id'))
             `
         );
 
-        ctx.status = 200;
+        ctx.body = invoiceId[1].rows[0].currval;
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.post('/create-services/:id', async(ctx) => {
+    try {
+        const invoiceId = ctx.params.id;
+        const services = ctx.request.body;
+
+        services.map(async service => {
+            await client.query(
+                `
+                    INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
+                    VALUES ('${invoiceId}', '${service.type}', '${service.unit}', '${service.amount}', '${service.pricePerUnit}');
+                `
+            );
+        });
+
+        ctx.body = 200;
     } catch (err) {
         console.log(err);
     }

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import axios from 'axios';
 
+import ServiceInterface from './ServiceInterface';
+
 import { FormElement, FormCaption, StyledButton, ServicesForm, ServicePanelToggler, ServicesContainer, Service, ServiceField, RemoveIcon } from './Form.style';
 import { DatePicker, Input, Radio, message } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
@@ -11,7 +13,7 @@ const Form = () => {
     const [signValue, setSignValue] = useState<number>(1);
     const [pdvValue, setPdvValue] = useState<number>(1);
     const [servicePanelOpen, setServicePanelOpen] = useState<boolean>(false);
-    const [services, setServices] = useState<any[]>([]);
+    const [services, setServices] = useState<ServiceInterface[]>([]);
 
     const onFinish = async (values: any) => {
         // close services panel because of inputs
@@ -30,13 +32,34 @@ const Form = () => {
             params: {
                 username: sessionStorage.getItem('username')
             }
-        })
+        });
 
-        if (response.status === 200) {
-            message.success('Invoice created');
-        } else {
-            message.error('Creating failed');
+        console.log(response);
+
+        if (response.status !== 200) {
+            return message.error('Creating failed');
         }
+
+        message.success('Invoice created');
+
+        // save time by not sending request
+        if (!services.length) {
+            return;
+        }
+
+        const invoiceId = response.data;
+
+        const response2 = await axios.post(`http://localhost:5000/create-services/${invoiceId}`, services);
+
+        console.log(response2);
+
+        if (response2.status !== 200) {
+            message.error('services insert failed');
+        }
+
+        message.success('Services inserted successfully');
+
+        window.location.reload();
     }
 
     const addService = () => {
@@ -45,7 +68,11 @@ const Form = () => {
         const amount = (document.getElementById('amount') as HTMLInputElement).value;
         const pricePerUnit = (document.getElementById('pricePerUnit') as HTMLInputElement).value;
 
-        setServices([...services, { type, unit, amount, pricePerUnit }]);
+        if (!type || !unit || !amount || !pricePerUnit) {
+            return message.error('You must fill in all the fields to add service');
+        }
+
+        setServices([...services, { type, unit, amount, pricePerUnit }] as ServiceInterface[]);
 
         // empty all inputs for service creation
         (document.getElementById('pricePerUnit') as HTMLInputElement).value = '';
@@ -56,7 +83,7 @@ const Form = () => {
 
     const removeService = (idx: number) => {
         if (window.confirm('Do you want to remove this service?')) {
-            const newServices = services.filter((service: any, index: number) => idx !== index);
+            const newServices = services.filter((service: ServiceInterface, index: number) => idx !== index);
             setServices(newServices);
         }
     }
@@ -156,12 +183,6 @@ const Form = () => {
                     label="Service type:"
                     name="serviceType"
                     id="serviceType"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter the type of service!',
-                        }
-                    ]}
                 >
                     <Input />
                 </FormElement.Item>
@@ -170,12 +191,6 @@ const Form = () => {
                     label="Unit:"
                     name="unit"
                     id="unit"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter the unit!',
-                        }
-                    ]}
                 >
                     <Input />
                 </FormElement.Item>
@@ -184,12 +199,6 @@ const Form = () => {
                     label="Amount:"
                     name="amount"
                     id="amount"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter the amount!',
-                        }
-                    ]}
                 >
                     <Input />
                 </FormElement.Item>
@@ -198,12 +207,6 @@ const Form = () => {
                     label="Price per unit:"
                     name="pricePerUnit"
                     id="pricePerUnit"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter the price per unit!',
-                        }
-                    ]}
                 >
                     <Input />
                 </FormElement.Item>
@@ -218,7 +221,7 @@ const Form = () => {
                 services.length
                     ? <ServicesContainer>
                         <p>Services:</p>
-                        {services.map((service: any, idx: number) => (
+                        {services.map((service: ServiceInterface, idx: number) => (
                             <Service key={idx}>
                                 <ServiceField>{service.type}</ServiceField>
                                 <ServiceField>{service.unit}</ServiceField>
