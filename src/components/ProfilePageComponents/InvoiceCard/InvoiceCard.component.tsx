@@ -21,10 +21,6 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
         }
     }
 
-    const updateInvoice = (id: number) => {
-        console.log(`invoice with id: ${id} updated`);
-    }
-
     return (
         <Card
             size="small"
@@ -32,7 +28,7 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
             extra={
                 <div>
                     <Link to={`/invoices/${invoice.id}`}>View</Link>
-                    <UpdateButton onClick={() => updateInvoice(invoice.id)}>Update</UpdateButton>
+                    <UpdateButton onClick={() => window.location.href = `/update-invoice/${invoice.id}`}>Update</UpdateButton>
                     <DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton>
                 </div>
             }

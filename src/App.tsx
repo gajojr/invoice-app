@@ -11,6 +11,7 @@ import LogInPage from './pages/LogInPage/LogInPage.page';
 import ProfilePage from './pages/ProfilePage/ProfilePage.page';
 import InvoicePage from './pages/InvoicePage/InvoicePage.page';
 import CreateInvoicePage from './pages/CreateInvoicePage/CreateInvoicePage.page';
+import UpdateInvoicePage from './pages/UpdateInvoicePage/UpdateInvoicePage.page';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route path="/create-invoice">
           <CreateInvoicePage />
+        </Route>
+        <Route path="/update-invoice/:id">
+          <UpdateInvoicePage />
         </Route>
       </Switch>
     </Router>

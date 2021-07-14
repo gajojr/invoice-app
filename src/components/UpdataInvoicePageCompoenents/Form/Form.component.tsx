@@ -1,19 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import ServiceInterface from './ServiceInterface';
+import ServiceInterface from '../../CreateInvoicePageComponents/Form/ServiceInterface';
 
 import { FormElement, FormCaption, StyledButton, ServicesForm, ServicePanelToggler, ServicesContainer, Service, ServiceField, RemoveIcon } from './Form.style';
 import { DatePicker, Input, Radio, message } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
-const Form = () => {
-    const [stampValue, setStampValue] = useState<number>(1);
-    const [signValue, setSignValue] = useState<number>(1);
-    const [pdvValue, setPdvValue] = useState<number>(1);
+const Form = ({ id }: { id: string }) => {
+    const [stampValue, setStampValue] = useState<boolean>(true);
+    const [signValue, setSignValue] = useState<boolean>(true);
+    const [pdvValue, setPdvValue] = useState<boolean>(true);
     const [servicePanelOpen, setServicePanelOpen] = useState<boolean>(false);
     const [services, setServices] = useState<ServiceInterface[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const response = await axios.get(`http://localhost:5000/invoices-to-update/${id}`);
+
+            const invoiceData = response.data.invoice;
+            const servicesData = response.data.services;
+
+            fillInTheInputs(invoiceData);
+            setServices(servicesData);
+
+            console.log(response);
+        })();
+    }, []);
+
+    const fillInTheInputs = (invoiceData: any) => {
+        console.log(invoiceData.name);
+
+        (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.name;
+        (document.getElementById('companyName') as HTMLInputElement).value = invoiceData.company_name;
+        (document.getElementById('address') as HTMLInputElement).value = invoiceData.client_address;
+        (document.getElementById('city') as HTMLInputElement).value = invoiceData.client_city;
+        (document.getElementById('pib') as HTMLInputElement).value = invoiceData.client_pib;
+        (document.getElementById('closingDate') as HTMLInputElement).value = invoiceData.closing_date;
+
+        setStampValue(invoiceData.stamp_needed);
+        setSignValue(invoiceData.sign_needed);
+        setPdvValue(invoiceData.pdv);
+    }
 
     const onFinish = async (values: any) => {
         // close services panel because of inputs
@@ -21,58 +50,38 @@ const Form = () => {
 
         const data = {
             ...values,
-            stamp: stampValue === 1 ? true : false,
-            sign: signValue === 1 ? true : false,
-            pdv: pdvValue === 1 ? true : false
+            stamp: stampValue,
+            sign: signValue,
+            pdv: pdvValue,
+            services
         }
 
         console.log(data);
 
-        const invoiceResponse = await axios.post('http://localhost:5000/create-invoice', data, {
-            params: {
-                username: sessionStorage.getItem('username')
-            }
-        });
+        const invoiceResponse = await axios.post(`http://localhost:5000/update-invoice/${id}`, data);
 
         console.log(invoiceResponse);
 
         if (invoiceResponse.status !== 200) {
-            return message.error('Creating failed');
+            return message.error('Updating failed');
         }
 
-        message.success('Invoice created');
-
-        // save time by not sending request
-        if (!services.length) {
-            return;
-        }
-
-        const invoiceId = invoiceResponse.data;
-
-        const servicesResponse = await axios.post(`http://localhost:5000/create-services/${invoiceId}`, services);
-
-        console.log(servicesResponse);
-
-        if (servicesResponse.status !== 200) {
-            message.error('services insert failed');
-        }
-
-        message.success('Services inserted successfully');
+        message.success('Invoice updated');
 
         window.location.reload();
     }
 
     const addService = () => {
-        const service_type = (document.getElementById('serviceType') as HTMLInputElement).value;
+        const type = (document.getElementById('serviceType') as HTMLInputElement).value;
         const unit = (document.getElementById('unit') as HTMLInputElement).value;
         const amount = parseFloat((document.getElementById('amount') as HTMLInputElement).value);
-        const price_per_unit = parseFloat((document.getElementById('pricePerUnit') as HTMLInputElement).value);
+        const pricePerUnit = parseFloat((document.getElementById('pricePerUnit') as HTMLInputElement).value);
 
-        if (!checkServiceInputs(service_type, unit, amount, price_per_unit)) {
+        if (!checkServiceInputs(type, unit, amount, pricePerUnit)) {
             return message.error('You must fill in all the fields to add service');
         }
 
-        setServices([...services, { service_type, unit, amount, price_per_unit }] as ServiceInterface[]);
+        setServices([...services, { type, unit, amount, pricePerUnit }] as ServiceInterface[]);
 
         cleanServiceInputs();
     }
@@ -102,7 +111,7 @@ const Form = () => {
 
     return (
         <FormElement onFinish={onFinish}>
-            <FormCaption>Create invoice</FormCaption>
+            <FormCaption>Update invoice</FormCaption>
 
             <FormElement.Item
                 label="Invoice name"
@@ -248,26 +257,26 @@ const Form = () => {
 
             <Radio.Group onChange={(e: any) => setStampValue(e.target.value)} value={stampValue} style={{ margin: 5 }}>
                 <hr />
-                <Radio value={1}>Stamp needed</Radio>
-                <Radio value={2}>Stamp isn't needed</Radio>
+                <Radio value={true}>Stamp needed</Radio>
+                <Radio value={false}>Stamp isn't needed</Radio>
                 <hr />
             </Radio.Group>
 
             <Radio.Group onChange={(e: any) => setSignValue(e.target.value)} value={signValue} style={{ margin: 5 }}>
                 <hr />
-                <Radio value={1}>Sign needed</Radio>
-                <Radio value={2}>Sign isn't needed</Radio>
+                <Radio value={true}>Sign needed</Radio>
+                <Radio value={false}>Sign isn't needed</Radio>
                 <hr />
             </Radio.Group>
 
             <Radio.Group onChange={(e: any) => setPdvValue(e.target.value)} value={pdvValue} style={{ margin: 5 }}>
                 <hr />
-                <Radio value={1}>Tax gatherer is in pdv system</Radio>
-                <Radio value={2}>Tax gatherer isn't in pdv system</Radio>
+                <Radio value={true}>Tax gatherer is in pdv system</Radio>
+                <Radio value={false}>Tax gatherer isn't in pdv system</Radio>
                 <hr />
             </Radio.Group>
 
-            <StyledButton htmlType="submit">Create invoice</StyledButton>
+            <StyledButton htmlType="submit">Update invoice</StyledButton>
         </FormElement>
     )
 }

@@ -1,6 +1,6 @@
 export default interface ServiceInterface {
-    type: string;
+    service_type: string;
     unit: number;
     amount: number;
-    pricePerUnit: number;
+    price_per_unit: number;
 }
