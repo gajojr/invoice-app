@@ -28,15 +28,15 @@ const Form = () => {
 
         console.log(data);
 
-        const response = await axios.post('http://localhost:5000/create-invoice', data, {
+        const invoiceResponse = await axios.post('http://localhost:5000/create-invoice', data, {
             params: {
                 username: sessionStorage.getItem('username')
             }
         });
 
-        console.log(response);
+        console.log(invoiceResponse);
 
-        if (response.status !== 200) {
+        if (invoiceResponse.status !== 200) {
             return message.error('Creating failed');
         }
 
@@ -47,13 +47,13 @@ const Form = () => {
             return;
         }
 
-        const invoiceId = response.data;
+        const invoiceId = invoiceResponse.data;
 
-        const response2 = await axios.post(`http://localhost:5000/create-services/${invoiceId}`, services);
+        const servicesResponse = await axios.post(`http://localhost:5000/create-services/${invoiceId}`, services);
 
-        console.log(response2);
+        console.log(servicesResponse);
 
-        if (response2.status !== 200) {
+        if (servicesResponse.status !== 200) {
             message.error('services insert failed');
         }
 
@@ -65,17 +65,29 @@ const Form = () => {
     const addService = () => {
         const type = (document.getElementById('serviceType') as HTMLInputElement).value;
         const unit = (document.getElementById('unit') as HTMLInputElement).value;
-        const amount = (document.getElementById('amount') as HTMLInputElement).value;
-        const pricePerUnit = (document.getElementById('pricePerUnit') as HTMLInputElement).value;
+        const amount = parseFloat((document.getElementById('amount') as HTMLInputElement).value);
+        const pricePerUnit = parseFloat((document.getElementById('pricePerUnit') as HTMLInputElement).value);
 
-        if (!type || !unit || !amount || !pricePerUnit) {
+        if (!checkServiceInputs(type, unit, amount, pricePerUnit)) {
             return message.error('You must fill in all the fields to add service');
         }
 
         setServices([...services, { type, unit, amount, pricePerUnit }] as ServiceInterface[]);
 
+        cleanServiceInputs();
+    }
+
+    const checkServiceInputs = (type: string, unit: string, amount: number, pricePerUnit: number) => {
+        if (!type || !unit || !amount || !pricePerUnit) {
+            return false;
+        }
+
+        return true;
+    }
+
+    const cleanServiceInputs = () => {
         // empty all inputs for service creation
-        (document.getElementById('pricePerUnit') as HTMLInputElement).value = '';
+        (document.getElementById('serviceType') as HTMLInputElement).value = '';
         (document.getElementById('unit') as HTMLInputElement).value = '';
         (document.getElementById('amount') as HTMLInputElement).value = '';
         (document.getElementById('pricePerUnit') as HTMLInputElement).value = '';
