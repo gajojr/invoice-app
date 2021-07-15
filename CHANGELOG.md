@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.51](https://github.com/gajojr/invoice-app/compare/v0.1.50...v0.1.51) (2021-07-15)
+
+
+### Bug Fixes
+
+* fix bug when adding new service while updating the invoice ([994e650](https://github.com/gajojr/invoice-app/commit/994e6508d577480d43422bfc51e6adec9f4b6c97))
+
 ### [0.1.50](https://github.com/gajojr/invoice-app/compare/v0.1.49...v0.1.50) (2021-07-14)
 
 
