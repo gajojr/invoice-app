@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.54](https://github.com/gajojr/invoice-app/compare/v0.1.53...v0.1.54) (2021-07-15)
+
+
+### Features
+
+* admins can now update and delete other users that are not admins ([be558da](https://github.com/gajojr/invoice-app/commit/be558da821fe5fa5e296e654f834e247252842e7))
+
 ### [0.1.53](https://github.com/gajojr/invoice-app/compare/v0.1.52...v0.1.53) (2021-07-15)
 
 
