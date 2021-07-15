@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
 
+import DeleteUserComponent from '../../components/AdminPageComponents/DeleteUserComponent/DeleteUser.component';
+import UpdateUserComponent from '../../components/AdminPageComponents/UpdateUsesComponent/UpdateUser.component';
+import NavigationComponent from '../../components/AdminPageComponents/Navigation/Navigation.component';
+
+import { AdminPageContainer } from './AdminPage.style';
+
 const AdminPage = () => {
     useEffect(() => {
         if (sessionStorage.getItem('role') !== 'admin') {
@@ -8,9 +14,11 @@ const AdminPage = () => {
     }, []);
 
     return (
-        <div>
-            This is admin page
-        </div>
+        <AdminPageContainer>
+            <NavigationComponent />
+            <DeleteUserComponent />
+            <UpdateUserComponent />
+        </AdminPageContainer>
     )
 }
 

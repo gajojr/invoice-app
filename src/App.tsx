@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import './App.less';
 
-import HomePage from './pages/HomePages/HomePage.page';
+import HomePage from './pages/HomePage/HomePage.page';
 import RegisterPage from './pages/RegisterPage/RegisterPage.page';
 import LogInPage from './pages/LogInPage/LogInPage.page';
 import ProfilePage from './pages/ProfilePage/ProfilePage.page';
