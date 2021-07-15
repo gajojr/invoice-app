@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.56](https://github.com/gajojr/invoice-app/compare/v0.1.55...v0.1.56) (2021-07-15)
+
+
+### Features
+
+* user will now be notified if admin deletes his account via email ([d7ff6a7](https://github.com/gajojr/invoice-app/commit/d7ff6a766719a7ef85434535461b64195f79c609))
+
 ### [0.1.55](https://github.com/gajojr/invoice-app/compare/v0.1.54...v0.1.55) (2021-07-15)
 
 
