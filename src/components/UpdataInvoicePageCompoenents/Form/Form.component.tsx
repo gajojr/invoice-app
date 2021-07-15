@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import ServiceInterface from '../../CreateInvoicePageComponents/Form/ServiceInterface';
+import InvoiceInterface from './InvoiceInterface';
 
 import { FormElement, FormCaption, StyledButton, ServicesForm, ServicePanelToggler, ServicesContainer, Service, ServiceField, RemoveIcon } from './Form.style';
 import { DatePicker, Input, Radio, message } from 'antd';
@@ -29,7 +30,7 @@ const Form = ({ id }: { id: string }) => {
         })();
     }, []);
 
-    const fillInTheInputs = (invoiceData: any) => {
+    const fillInTheInputs = (invoiceData: InvoiceInterface) => {
         (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.name;
         (document.getElementById('companyName') as HTMLInputElement).value = invoiceData.company_name;
         (document.getElementById('address') as HTMLInputElement).value = invoiceData.client_address;
