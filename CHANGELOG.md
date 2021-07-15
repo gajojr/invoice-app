@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.55](https://github.com/gajojr/invoice-app/compare/v0.1.54...v0.1.55) (2021-07-15)
+
+
+### Bug Fixes
+
+* when user is deleted, all invoices and services that that user made are deleted too via postgres contraint, also if user is deleted, his profile picture gets deleted ([167d929](https://github.com/gajojr/invoice-app/commit/167d9293b9e3e4805f0549d30f92494ec7d10dd8))
+
 ### [0.1.54](https://github.com/gajojr/invoice-app/compare/v0.1.53...v0.1.54) (2021-07-15)
 
 
