@@ -30,8 +30,6 @@ const Form = ({ id }: { id: string }) => {
     }, []);
 
     const fillInTheInputs = (invoiceData: any) => {
-        console.log(invoiceData.name);
-
         (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.name;
         (document.getElementById('companyName') as HTMLInputElement).value = invoiceData.company_name;
         (document.getElementById('address') as HTMLInputElement).value = invoiceData.client_address;
@@ -72,22 +70,22 @@ const Form = ({ id }: { id: string }) => {
     }
 
     const addService = () => {
-        const type = (document.getElementById('serviceType') as HTMLInputElement).value;
+        const service_type = (document.getElementById('serviceType') as HTMLInputElement).value;
         const unit = (document.getElementById('unit') as HTMLInputElement).value;
         const amount = parseFloat((document.getElementById('amount') as HTMLInputElement).value);
-        const pricePerUnit = parseFloat((document.getElementById('pricePerUnit') as HTMLInputElement).value);
+        const price_per_unit = parseFloat((document.getElementById('pricePerUnit') as HTMLInputElement).value);
 
-        if (!checkServiceInputs(type, unit, amount, pricePerUnit)) {
+        if (!checkServiceInputs(service_type, unit, amount, price_per_unit)) {
             return message.error('You must fill in all the fields to add service');
         }
 
-        setServices([...services, { type, unit, amount, pricePerUnit }] as ServiceInterface[]);
+        setServices([...services, { service_type, unit, amount, price_per_unit }] as ServiceInterface[]);
 
         cleanServiceInputs();
     }
 
-    const checkServiceInputs = (type: string, unit: string, amount: number, pricePerUnit: number) => {
-        if (!type || !unit || !amount || !pricePerUnit) {
+    const checkServiceInputs = (service_type: string, unit: string, amount: number, price_per_unit: number) => {
+        if (!service_type || !unit || !amount || !price_per_unit) {
             return false;
         }
 
@@ -110,7 +108,7 @@ const Form = ({ id }: { id: string }) => {
     }
 
     return (
-        <FormElement onFinish={onFinish}>
+        <FormElement onFinish={onFinish} >
             <FormCaption>Update invoice</FormCaption>
 
             <FormElement.Item
@@ -158,7 +156,7 @@ const Form = ({ id }: { id: string }) => {
                 rules={[
                     {
                         required: true,
-                        message: 'Please enter the name of client\' city!',
+                        message: 'Please enter the name of client\'s city!',
                     }
                 ]}
             >
@@ -277,7 +275,7 @@ const Form = ({ id }: { id: string }) => {
             </Radio.Group>
 
             <StyledButton htmlType="submit">Update invoice</StyledButton>
-        </FormElement>
+        </FormElement >
     )
 }
 
