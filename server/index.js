@@ -197,13 +197,6 @@ router.delete('/invoices/:id', async(ctx) => {
 
         await client.query(
             `
-                DELETE FROM services
-                WHERE invoice_id = '${id}' 
-            `
-        );
-
-        await client.query(
-            `
                 DELETE FROM invoices
                 WHERE id = '${id}' 
             `
@@ -250,7 +243,7 @@ router.post('/create-services/:id', async(ctx) => {
             await client.query(
                 `
                     INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
-                    VALUES ('${invoiceId}', '${service.type}', '${service.unit}', '${service.amount}', '${service.pricePerUnit}');
+                    VALUES ('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}');
                 `
             );
         });
@@ -352,7 +345,7 @@ router.delete('/delete-user', async(ctx) => {
 
         const user = await client.query(
             `
-                SELECT username, role FROM users
+                SELECT username, role, document_location FROM users
                 WHERE username = '${username}';
             `
         );
@@ -371,6 +364,8 @@ router.delete('/delete-user', async(ctx) => {
                 WHERE username = '${username}'
             `
         );
+
+        removeFile(user.rows[0].document_location);
 
         ctx.status = 200;
     } catch (err) {
