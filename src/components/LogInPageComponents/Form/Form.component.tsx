@@ -12,6 +12,10 @@ const Form = () => {
                 if (!res.data.error) {
                     message.success('logged in successfully');
                     sessionStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('role', res.data.role);
+                    if (res.data.role === 'admin') {
+                        return window.location.href = '/admin-page';
+                    }
                     window.location.href = '/profile-page';
                 } else {
                     console.log(res.data.error)

@@ -6,7 +6,7 @@ import Form from '../../components/RegisterPageCompents/Form/Form.component';
 const RegisterPage = () => {
     useEffect(() => {
         if (sessionStorage.getItem('username')) {
-            window.location.href = '/profile-page';
+            window.location.href = sessionStorage.getItem('role') === 'admin' ? '/admin-page' : '/profile-page';
         }
     }, []);
 

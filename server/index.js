@@ -124,19 +124,19 @@ router.post('/log-in', async(ctx) => {
             return ctx.body = { error: 'user with this username doesn\'t exist' };
         }
 
-        const passwordQuery = await client.query(
+        const passwordAndRoleQuery = await client.query(
             `
-                SELECT password FROM Users
+                SELECT password, role FROM Users
                 WHERE username = '${username}';
             `
         )
 
-        const passwordFromDb = passwordQuery.rows[0].password;
+        const passwordFromDb = passwordAndRoleQuery.rows[0].password;
 
         const comparePassword = await bcrypt.compare(password, passwordFromDb);
 
         if (comparePassword) {
-            ctx.body = { username };
+            ctx.body = { username, role: passwordAndRoleQuery.rows[0].role };
         } else {
             ctx.body = { error: 'username and password don\'t match!' }
         }

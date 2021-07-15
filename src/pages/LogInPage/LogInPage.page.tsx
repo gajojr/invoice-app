@@ -6,7 +6,7 @@ import { LogInPageContainer } from './LogInPage.style';
 const LogInPage = () => {
     useEffect(() => {
         if (sessionStorage.getItem('username')) {
-            window.location.href = '/profile-page';
+            window.location.href = sessionStorage.getItem('role') === 'admin' ? '/admin-page' : '/profile-page';
         }
     }, []);
 
