@@ -9,6 +9,7 @@ const multer = require('@koa/multer');
 const bcrypt = require('bcrypt');
 const send = require('koa-send');
 const { removeFile } = require('./utils/utils');
+const { sendLeavingEmail } = require('./utils/emailAccount');
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -345,7 +346,7 @@ router.delete('/delete-user', async(ctx) => {
 
         const user = await client.query(
             `
-                SELECT username, role, document_location FROM users
+                SELECT username, role, email, document_location FROM users
                 WHERE username = '${username}';
             `
         );
@@ -366,6 +367,8 @@ router.delete('/delete-user', async(ctx) => {
         );
 
         removeFile(user.rows[0].document_location);
+
+	sendLeavingEmail(user.rows[0].email, username);
 
         ctx.status = 200;
     } catch (err) {
