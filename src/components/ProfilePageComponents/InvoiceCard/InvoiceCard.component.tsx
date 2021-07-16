@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { InvoiceInterface } from '../InvoiceInterface';
 
 import { Card, message } from 'antd';
-import { DeleteButton, UpdateButton } from './InvoiceCard.style';
+import { StyledCard, DeleteButton, UpdateButton } from './InvoiceCard.style';
 
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     const deleteInvoice = async (id: number) => {
@@ -22,7 +22,7 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     }
 
     return (
-        <Card
+        <StyledCard
             size="small"
             title={invoice.name}
             extra={
@@ -32,13 +32,12 @@ const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
                     <DeleteButton type="primary" onClick={() => deleteInvoice(invoice.id)}>Delete</DeleteButton>
                 </div>
             }
-            style={{ width: 300 }}
         >
             <p>City: {invoice.city}</p>
             <p>Address: {invoice.address}</p>
             <p>PIB: {invoice.pib}</p>
             <Link to={`/invoices/${invoice.id}`}><p style={{ color: '#000' }}>...</p></Link>
-        </Card>
+        </StyledCard>
     )
 }
 

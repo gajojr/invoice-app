@@ -1,12 +1,23 @@
 import styled from 'styled-components';
 
-import { Button } from 'antd';
+import { Button, Card } from 'antd';
 
-export const Card = styled.article`
-    display: flex;
-    border: 2px solid black;
-    min-width: 25vw;
-    padding: 5px;
+export const StyledCard = styled(Card)`
+    flex: 1;
+    min-width: 20vw;
+    max-width: 50vw;
+
+    @media(max-width: 992px) {
+        min-width: 25vw;
+    }
+
+    @media(max-width: 700px) {
+        min-width: 33vw;
+    }
+
+    @media(max-width: 490px) {
+        min-width: 100%;
+    }
 `;
 
 export const DeleteButton = styled(Button)`
