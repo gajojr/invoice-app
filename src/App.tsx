@@ -1,3 +1,5 @@
+import { lazy, Suspense } from 'react';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -5,42 +7,60 @@ import {
 } from 'react-router-dom';
 import './App.less';
 
-import HomePage from './pages/HomePage/HomePage.page';
-import RegisterPage from './pages/RegisterPage/RegisterPage.page';
-import LogInPage from './pages/LogInPage/LogInPage.page';
-import ProfilePage from './pages/ProfilePage/ProfilePage.page';
-import InvoicePage from './pages/InvoicePage/InvoicePage.page';
-import CreateInvoicePage from './pages/CreateInvoicePage/CreateInvoicePage.page';
-import UpdateInvoicePage from './pages/UpdateInvoicePage/UpdateInvoicePage.page';
-import AdminPage from './pages/AdminPage/AdminPage.page';
+const HomePage = lazy(() => import('./pages/HomePage/HomePage.page'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage.page'));
+const LogInPage = lazy(() => import('./pages/LogInPage/LogInPage.page'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage.page'));
+const InvoicePage = lazy(() => import('./pages/InvoicePage/InvoicePage.page'));
+const CreateInvoicePage = lazy(() => import('./pages/CreateInvoicePage/CreateInvoicePage.page'));
+const UpdateInvoicePage = lazy(() => import('./pages/UpdateInvoicePage/UpdateInvoicePage.page'));
+const AdminPage = lazy(() => import('./pages/AdminPage/AdminPage.page'));
 
 function App() {
+  const fallbackComponent = () => <div>Loading...</div>;
+
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          <HomePage />
+          <Suspense fallback={fallbackComponent}>
+            <HomePage />
+          </Suspense>
         </Route>
         <Route path="/register">
-          <RegisterPage />
+          <Suspense fallback={fallbackComponent}>
+            <RegisterPage />
+          </Suspense>
         </Route>
         <Route path="/log-in">
-          <LogInPage />
+          <Suspense fallback={fallbackComponent}>
+            <LogInPage />
+          </Suspense>
         </Route>
         <Route path="/profile-page">
-          <ProfilePage />
+          <Suspense fallback={fallbackComponent}>
+            <ProfilePage />
+          </Suspense>
         </Route>
         <Route path="/invoices/:id">
-          <InvoicePage />
+          <Suspense fallback={fallbackComponent}>
+            <InvoicePage />
+          </Suspense>
         </Route>
         <Route path="/create-invoice">
-          <CreateInvoicePage />
+          <Suspense fallback={fallbackComponent}>
+            <CreateInvoicePage />
+          </Suspense>
         </Route>
         <Route path="/update-invoice/:id">
-          <UpdateInvoicePage />
+          <Suspense fallback={fallbackComponent}>
+            <UpdateInvoicePage />
+          </Suspense>
         </Route>
         <Route path="/admin-page">
-          <AdminPage />
+          <Suspense fallback={fallbackComponent}>
+            <AdminPage />
+          </Suspense>
         </Route>
       </Switch>
     </Router>
