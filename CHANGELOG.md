@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.57](https://github.com/gajojr/invoice-app/compare/v0.1.56...v0.1.57) (2021-07-16)
+
+
+### Bug Fixes
+
+* invoice cards are now responsive ([c715281](https://github.com/gajojr/invoice-app/commit/c7152818ecea230b3fc9ec1f356ecc780716d429))
+
 ### [0.1.56](https://github.com/gajojr/invoice-app/compare/v0.1.55...v0.1.56) (2021-07-15)
 
 
