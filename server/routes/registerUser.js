@@ -6,6 +6,7 @@ const { removeFile } = require('../utils/utils');
 async function registerUser(ctx) {
     try {
         const body = await ctx.request.body;
+	console.log(body);
         // file path is not in body
         const filePath = ctx.request.file.path;
         // hash the password for security
