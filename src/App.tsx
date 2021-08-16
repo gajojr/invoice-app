@@ -23,42 +23,42 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact>
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <HomePage />
           </Suspense>
         </Route>
         <Route path="/register">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <RegisterPage />
           </Suspense>
         </Route>
         <Route path="/log-in">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <LogInPage />
           </Suspense>
         </Route>
         <Route path="/profile-page">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <ProfilePage />
           </Suspense>
         </Route>
         <Route path="/invoices/:id">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <InvoicePage />
           </Suspense>
         </Route>
         <Route path="/create-invoice">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <CreateInvoicePage />
           </Suspense>
         </Route>
         <Route path="/update-invoice/:id">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <UpdateInvoicePage />
           </Suspense>
         </Route>
         <Route path="/admin-page">
-          <Suspense fallback={fallbackComponent}>
+          <Suspense fallback={fallbackComponent()}>
             <AdminPage />
           </Suspense>
         </Route>
