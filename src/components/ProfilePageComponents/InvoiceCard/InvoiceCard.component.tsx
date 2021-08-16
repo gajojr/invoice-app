@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { InvoiceInterface } from '../InvoiceInterface';
 
-import { Card, message } from 'antd';
+import { message } from 'antd';
 import { StyledCard, DeleteButton, UpdateButton } from './InvoiceCard.style';
 
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {

@@ -6,7 +6,7 @@ import { CardsContainer, CardContainer } from './InvoicesList.styles';
 import InvoiceCard from '../InvoiceCard/InvoiceCard.component';
 
 const InvoicesList = () => {
-    const [invoices, setInvoices] = useState<any>([]);
+    const [invoices, setInvoices] = useState<InvoiceInterface[]>([]);
 
     useEffect(() => {
         (async () => {

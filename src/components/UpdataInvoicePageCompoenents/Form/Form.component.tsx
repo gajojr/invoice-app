@@ -28,7 +28,7 @@ const Form = ({ id }: { id: string }) => {
 
             console.log(response);
         })();
-    }, []);
+    }, [id]);
 
     const fillInTheInputs = (invoiceData: InvoiceInterface) => {
         (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.name;
