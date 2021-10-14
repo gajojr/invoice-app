@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Image } from 'antd';
+import { Image, message } from 'antd';
 
 import { ProfileCard, ProfileInfo, Username, StyledButton } from './ProfileData.style';
 
@@ -13,27 +13,27 @@ const ProfileData = () => {
             window.location.href = '/';
         }
 
-        axios
-            .get(
-                `http://localhost:5000/get-avatar`,
-                {
-                    params: {
-                        username: sessionStorage.getItem('username')
-                    },
-                    responseType: 'arraybuffer'
-                }
-            )
-            .then(response => {
-                console.log(response);
-                const base64 = btoa(
-                    new Uint8Array(response.data).reduce(
-                        (data, byte) => data + String.fromCharCode(byte),
-                        '',
-                    ),
-                );
-                setAvatarURL("data:;base64," + base64);
-            })
-            .catch(err => console.log(err));
+        const clearUpTheUrl = (url: string) => {
+            const reverseSlashes = url.replace(/\\/g, '/');
+            const clearedUpUrl = reverseSlashes.slice(reverseSlashes.indexOf('/') + 1, reverseSlashes.length);
+            return clearedUpUrl;
+        }
+
+        (async () => {
+            try {
+                const response = await axios.get('/avatar',
+                    {
+                        params: {
+                            username: sessionStorage.getItem('username')
+                        }
+                    }
+                )
+                console.log(response.data);
+                setAvatarURL(clearUpTheUrl(response.data));
+            } catch (err: any) {
+                message.error('Profile picture couldn\'t be loaded');
+            }
+        })();
     }, []);
 
     const logOff = () => {

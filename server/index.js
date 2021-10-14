@@ -1,9 +1,10 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
 const bodyParser = require('koa-body-parser');
 const cors = require('@koa/cors');
 const helmet = require('koa-helmet');
+const serve = require('koa-static');
 const { Client } = require('pg');
 const multer = require('@koa/multer');
 
@@ -12,16 +13,21 @@ const { getAvatar } = require('./routes/getAvatar');
 const { userLogIn } = require('./routes/logIn');
 const { getInvoices } = require('./routes/getInvoices');
 const { getInvoice } = require('./routes/getInvoice');
-const { deleteInvoice } = require('./routes/deleteInvoice'); 
-const { createInvoice } = require('./routes/createInvoice'); 
-const { createServices } = require('./routes/createServices'); 
+const { deleteInvoice } = require('./routes/deleteInvoice');
+const { createInvoice } = require('./routes/createInvoice');
+const { createServices } = require('./routes/createServices');
 const { getInvoiceToUpdate } = require('./routes/getInvoiceToUpdate');
-const { updateInvoice } = require('./routes/updateInvoice'); 
+const { updateInvoice } = require('./routes/updateInvoice');
 const { deleteUser } = require('./routes/deleteUser');
 const { promoteUserToAdmin } = require('./routes/promoteUser');
 
 const app = new Koa();
 const router = new KoaRouter();
+app.use(serve(__dirname));
+app.use(bodyParser());
+app.use(cors());
+app.use(helmet());
+app.use(router.routes()).use(router.allowedMethods());
 const upload = multer({ dest: './server/uploads' });
 
 const PORT = process.env.PORT || 5000;
@@ -40,14 +46,9 @@ client.connect(err => {
     }
 });
 
-app.use(bodyParser());
-app.use(cors());
-app.use(helmet());
-app.use(router.routes()).use(router.allowedMethods());
-
 router.post('/register', upload.single('avatar'), (ctx) => registerUser(ctx));
 
-router.get('/get-avatar', (ctx) => getAvatar(ctx));
+router.get('/avatar', (ctx) => getAvatar(ctx));
 
 router.post('/log-in', ctx => userLogIn(ctx));
 

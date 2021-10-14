@@ -1,5 +1,3 @@
-const send = require('koa-send');
-
 const { client } = require('../utils/db');
 
 async function getAvatar(ctx) {
@@ -8,15 +6,13 @@ async function getAvatar(ctx) {
 
         const res = await client.query(
             `
-                SELECT * 
+                SELECT document_location 
                 FROM Users
                 WHERE username = '${username}' 
             `
         );
 
-        const avatarURL = res.rows[0].document_location;
-
-        await send(ctx, avatarURL);
+        ctx.body = res.rows[0].document_location;
     } catch (err) {
         console.log(err);
     }
