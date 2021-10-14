@@ -1,6 +1,6 @@
 {
   "name": "invoice-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This app can be used to create, update, delete, view and download invoices. User can register and start using the app, also there is admin role. Admin can delete users that are not admins and promote regular user to admin.",
   "main": "index.js",
   "scripts": {
