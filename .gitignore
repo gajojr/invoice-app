@@ -6,6 +6,7 @@ client/node_modules
 server/node_modules
 backend/node_modules
 backend/build
+backend/uploads
 requests.http
 /.pnp
 .pnp.js
