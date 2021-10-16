@@ -12,7 +12,7 @@ const DeleteUserComponent = () => {
             }
         }
 
-        const response = await axios.delete(`http://localhost:5000/delete-user`, {
+        const response = await axios.delete('/users', {
             params: { ...values, adminUsername: sessionStorage.getItem('username') }
         });
         console.log(response);

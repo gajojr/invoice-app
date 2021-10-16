@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, use, del, patch } from '../decorators';
+import { get, post, controller, bodyValidator, del, patch } from '../decorators';
 import pool from '../../utils/db';
 import { InvoiceEnum } from './InvoiceEnum';
 import ServiceInterface from './ServiceInterface';
