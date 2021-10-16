@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { AppRouter } from './AppRouter';
 import './controllers/AuthController/AuthController';
 import './controllers/AvatarController/AvatarController';
+import './controllers/InvoicesController/InvoicesController';
 
 const app = express();
 

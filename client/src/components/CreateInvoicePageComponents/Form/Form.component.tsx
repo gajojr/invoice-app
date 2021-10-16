@@ -28,7 +28,7 @@ const Form = () => {
 
         console.log(data);
 
-        const invoiceResponse = await axios.post('http://localhost:5000/create-invoice', data, {
+        const invoiceResponse = await axios.post('/invoices', data, {
             params: {
                 username: sessionStorage.getItem('username')
             }
@@ -49,7 +49,7 @@ const Form = () => {
 
         const invoiceId = invoiceResponse.data;
 
-        const servicesResponse = await axios.post(`http://localhost:5000/create-services/${invoiceId}`, services);
+        const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services);
 
         console.log(servicesResponse);
 

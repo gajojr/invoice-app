@@ -18,7 +18,7 @@ const InvoicePaper = ({ id }: { id: string }) => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get(`http://localhost:5000/invoices/${id}`, {
+            const response = await axios.get(`/invoices/${id}`, {
                 params: {
                     username: sessionStorage.getItem('username')
                 }
