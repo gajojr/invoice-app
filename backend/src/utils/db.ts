@@ -1,20 +1,16 @@
-require('dotenv').config({ path: '../.env' });
-const { Client } = require('pg');
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
 
-const client = new Client({
+const pool = new Pool({
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    port: 5432,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    max: 20,
+    connectionTimeoutMillis: 0,
+    idleTimeoutMillis: 0
 });
 
-client.connect((err: any) => {
-    if (err) {
-        console.log(err)
-    }
-});
-
-module.exports = {
-    client
-}
+export default pool;
