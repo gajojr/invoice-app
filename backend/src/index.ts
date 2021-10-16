@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { AppRouter } from './AppRouter';
-import './controllers/AuthController';
+import './controllers/AuthController/AuthController';
 
 const app = express();
 

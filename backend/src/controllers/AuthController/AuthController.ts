@@ -1,14 +1,27 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, use } from './decorators';
+import { get, post, controller, bodyValidator, use } from '../decorators';
 import bcrypt from 'bcrypt';
-import pool from '../utils/db';
-import { upload } from '../utils/fileActions';
+import pool from '../../utils/db';
+import { upload } from '../../utils/fileActions';
+import { AuthEnum } from './AuthEnum';
 
 @controller('')
 class AuthController {
     @post('/register')
     @use(upload.single('avatar'))
-    @bodyValidator('firstName', 'lastName', 'password', 'username', 'address', 'city', 'postalCode', 'companyName', 'pib', 'giroAccount', 'email')
+    @bodyValidator(
+        AuthEnum.firstName,
+        AuthEnum.lastName,
+        AuthEnum.password,
+        AuthEnum.username,
+        AuthEnum.address,
+        AuthEnum.city,
+        AuthEnum.postalCode,
+        AuthEnum.companyName,
+        AuthEnum.pib,
+        AuthEnum.giroAccount,
+        AuthEnum.email
+    )
     async postRegister(req: Request, res: Response) {
         try {
             const { firstName, lastName, password, username, address, city, postalCode, companyName, pib, giroAccount, email } = req.body;
@@ -16,8 +29,6 @@ class AuthController {
             const filePath = req?.file?.path;
 
             const hashedPassword = await bcrypt.hash(password, 10);
-
-            console.log(filePath);
 
             const usernameQuery = await pool.query(
                 `
@@ -28,6 +39,7 @@ class AuthController {
 
             if (usernameQuery?.rows?.length) {
                 console.log('usao u username check');
+                // register failed, remove the profile picture
                 removeFile(filePath as string);
                 res.send({ error: 'user with this username already exists!' });
             }
@@ -41,6 +53,7 @@ class AuthController {
 
             if (emailQuery?.rows?.length) {
                 console.log('usao u email check');
+                // register failed, remove the profile picture
                 removeFile(filePath as string);
                 res.send({ error: 'user with this email already exists!' });
             }
@@ -59,7 +72,7 @@ class AuthController {
     }
 
     @post('/log-in')
-    @bodyValidator('username', 'password')
+    @bodyValidator(AuthEnum.username, AuthEnum.password)
     async postLogin(req: Request, res: Response) {
         try {
             const { username, password } = await req.body;
