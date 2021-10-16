@@ -28,7 +28,7 @@ app.use(bodyParser());
 app.use(cors());
 app.use(helmet());
 app.use(router.routes()).use(router.allowedMethods());
-const upload = multer({ dest: './server/uploads' });
+const upload = multer({ dest: './uploads' });
 
 const PORT = process.env.PORT || 5000;
 

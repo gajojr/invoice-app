@@ -14,8 +14,7 @@ const ProfileData = () => {
         }
 
         const clearUpTheUrl = (url: string) => {
-            const reverseSlashes = url.replace(/\\/g, '/');
-            const clearedUpUrl = reverseSlashes.slice(reverseSlashes.indexOf('/') + 1, reverseSlashes.length);
+            const clearedUpUrl = url.replace(/\\/g, '/');
             return clearedUpUrl;
         }
 
