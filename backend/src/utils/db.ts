@@ -9,7 +9,7 @@ const client = new Client({
     database: process.env.DB_NAME
 });
 
-client.connect(err => {
+client.connect((err: any) => {
     if (err) {
         console.log(err)
     }

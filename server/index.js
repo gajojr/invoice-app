@@ -5,7 +5,6 @@ const bodyParser = require('koa-body-parser');
 const cors = require('@koa/cors');
 const helmet = require('koa-helmet');
 const serve = require('koa-static');
-const { Client } = require('pg');
 const multer = require('@koa/multer');
 
 const { registerUser } = require('./routes/registerUser');
@@ -31,20 +30,6 @@ app.use(router.routes()).use(router.allowedMethods());
 const upload = multer({ dest: './uploads' });
 
 const PORT = process.env.PORT || 5000;
-
-const client = new Client({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
-
-client.connect(err => {
-    if (err) {
-        console.log(err)
-    }
-});
 
 router.post('/register', upload.single('avatar'), (ctx) => registerUser(ctx));
 
