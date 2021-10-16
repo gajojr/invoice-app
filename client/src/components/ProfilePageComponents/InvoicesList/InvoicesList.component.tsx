@@ -10,7 +10,7 @@ const InvoicesList = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get('http://localhost:5000/invoices', {
+            const response = await axios.get('/invoices', {
                 params: {
                     username: sessionStorage.getItem('username')
                 }

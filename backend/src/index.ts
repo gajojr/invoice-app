@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import { AppRouter } from './AppRouter';
 import './controllers/AuthController/AuthController';
+import './controllers/AvatarController/AvatarController';
 
 const app = express();
 
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static('./'));
 app.use(AppRouter.getInstance());
 app.use(helmet());
 

@@ -10,7 +10,7 @@ import { StyledCard, DeleteButton, UpdateButton } from './InvoiceCard.style';
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     const deleteInvoice = async (id: number) => {
         if (window.confirm('do you want to delete this invoice')) {
-            const response = await axios.delete(`http://localhost:5000/invoices/${id}`);
+            const response = await axios.delete(`/invoices/${id}`);
             console.log(response);
             if (response.status === 200) {
                 message.success('invoice deleted!');
