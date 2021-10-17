@@ -49,6 +49,7 @@ const Form = () => {
 
         // save time by not sending request
         if (!services.length) {
+            window.location.reload();
             return;
         }
 
