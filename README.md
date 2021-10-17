@@ -4,9 +4,7 @@ This app can be used to create, update, delete, view and download invoices. User
 
 ## How to run this app
 1. In root folder of the project do the: **npm install**
-2. In backend folder also do the **npm install**
+2. In server folder also do the **npm install**
 3. In client folder do the **npm install**
 4. In client folder of the project do the: **npm start** to start the client
-5. In backend of the project do the: **npm start** to start the server, first time it will fail due build project not being generated, so you'll have to run this command twice
-
-*server folder is deprecated and will be removed in future*
+5. In server of the project do the: **npm start** to start the server, first time it will fail due build project not being generated, so you'll have to run this command twice
