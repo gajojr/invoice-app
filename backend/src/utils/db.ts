@@ -1,6 +1,6 @@
-import { Pool } from 'pg';
 import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
+import { Pool } from 'pg';
 
 // must convert port to number, or else it will throw an error
 const port: number = parseInt(<string>process.env.DB_PORT)

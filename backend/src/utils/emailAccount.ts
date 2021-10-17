@@ -1,7 +1,8 @@
-require('dotenv').config({ path: '../.env' });
-const sgMail = require('@sendgrid/mail');
+import dotenv from 'dotenv';
+dotenv.config({ path: '../.env' });
+import sgMail from '@sendgrid/mail';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 const sendLeavingEmail = (email: string, username: string) => {
     const msg = {
