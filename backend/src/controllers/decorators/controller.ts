@@ -22,6 +22,24 @@ function bodyValidators(keys: string): RequestHandler {
     }
 }
 
+function queryValidators(keys: string): RequestHandler {
+    return function (req: Request, res: Response, next: NextFunction) {
+        if (!req.query) {
+            res.status(422).send('Invalid request');
+            return;
+        }
+
+        for (let key of keys) {
+            if (!req.query[key]) {
+                res.status(422).send(`Missing query property: ${key}`);
+                return;
+            }
+        }
+
+        next();
+    }
+}
+
 export function controller(routePrefix: string) {
     return function (target: Function) {
         const router = AppRouter.getInstance();
@@ -48,14 +66,21 @@ export function controller(routePrefix: string) {
                 target.prototype,
                 key
             ) || [];
+            const requiredQueryProps = Reflect.getMetadata(
+                MetadataKeys.queryValidator,
+                target.prototype,
+                key
+            ) || [];
 
             const validator = bodyValidators(requiredBodyProps);
+            const queryValidator = queryValidators(requiredQueryProps);
 
             if (path) {
                 router[method](
                     `${routePrefix}${path}`,
                     ...middlewares,
                     validator,
+                    queryValidator,
                     routeHandler
                 );
             }

@@ -20,7 +20,7 @@ const Form = ({ id }: { id: string }) => {
         (async () => {
             const response = await axios.get(`/invoices/${id}`);
 
-            const invoiceData = response.data.invoice;
+            const invoiceData = response.data.exchangeData;
             const servicesData = response.data.services;
 
             fillInTheInputs(invoiceData);
@@ -31,11 +31,11 @@ const Form = ({ id }: { id: string }) => {
     }, [id]);
 
     const fillInTheInputs = (invoiceData: InvoiceInterface) => {
-        (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.name;
-        (document.getElementById('companyName') as HTMLInputElement).value = invoiceData.company_name;
-        (document.getElementById('address') as HTMLInputElement).value = invoiceData.client_address;
-        (document.getElementById('city') as HTMLInputElement).value = invoiceData.client_city;
-        (document.getElementById('pib') as HTMLInputElement).value = invoiceData.client_pib;
+        (document.getElementById('invoiceName') as HTMLInputElement).value = invoiceData.invoice_name;
+        (document.getElementById('companyName') as HTMLInputElement).value = invoiceData.from_company;
+        (document.getElementById('address') as HTMLInputElement).value = invoiceData.to_address;
+        (document.getElementById('city') as HTMLInputElement).value = invoiceData.to_city;
+        (document.getElementById('pib') as HTMLInputElement).value = invoiceData.to_pib;
         (document.getElementById('closingDate') as HTMLInputElement).value = invoiceData.closing_date;
 
         setStampValue(invoiceData.stamp_needed);

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, del, patch } from '../decorators';
+import { get, post, controller, bodyValidator, queryValidator, del, patch } from '../decorators';
 import pool from '../../utils/db';
 import { InvoiceEnum } from './InvoiceEnum';
 import ServiceInterface from './ServiceInterface';
@@ -7,6 +7,7 @@ import ServiceInterface from './ServiceInterface';
 @controller('/invoices')
 class InvoicesController {
     @get('/')
+    @queryValidator('username')
     async getInvoices(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -32,6 +33,7 @@ class InvoicesController {
     }
 
     @get('/:id')
+    @queryValidator('username')
     async getInvoiceById(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -59,7 +61,8 @@ class InvoicesController {
                         invoices.closing_date AS closing_date, 
                         invoices.stamp_needed AS stamp_needed, 
                         invoices.sign_needed AS sign_needed, 
-                        invoices.pdv AS pdv from users
+                        invoices.pdv AS pdv 
+                    FROM users
                     JOIN invoices on users.id = invoices.user_id
                     WHERE users.username = '${username}' AND invoices.id = '${id}';
                 `
@@ -115,6 +118,7 @@ class InvoicesController {
         InvoiceEnum.sign,
         InvoiceEnum.pdv
     )
+    @queryValidator('username')
     async createInvoice(req: Request, res: Response) {
         try {
             const body = req.body;
@@ -142,19 +146,29 @@ class InvoicesController {
     }
 
     @post('/create-services/:id')
-    createServices(req: Request, res: Response) {
+    async createServices(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;
             const services = req.body;
 
-            services.map(async (service: ServiceInterface) => {
-                await pool.query(
-                    `
-                        INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
-                        VALUES ('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}');
-                    `
-                );
-            });
+            await pool.query(
+                `
+                    INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
+                    VALUES
+                    ${services.map((service: ServiceInterface) => {
+                    return `('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}'),`
+                })}
+                `
+            );
+
+            // services.map(async (service: ServiceInterface) => {
+            //     await pool.query(
+            //         `
+            //             INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
+            //             VALUES ('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}');
+            //         `
+            //     );
+            // });
 
             res.status(200);
         } catch (err) {
