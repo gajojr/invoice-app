@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import format from 'pg-format';
-import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, patch } from '../decorators';
+import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, patch, put } from '../decorators';
 import pool from '../../utils/db';
 import { InvoiceEnum } from './InvoiceEnum';
 import ServiceInterface from './ServiceInterface';
@@ -193,7 +193,7 @@ class InvoicesController {
         }
     }
 
-    @patch('/invoice/:id')
+    @post('/update-invoice/:id')
     @bodyValidator(
         InvoiceEnum.invoiceName,
         InvoiceEnum.companyName,
@@ -210,7 +210,7 @@ class InvoicesController {
         try {
             const invoiceId = req.params.id;
             const body = req.body;
-            const services = body.services;
+            const services = body.services.map((service: ServiceInterface) => (Object.values({ invoiceId, ...service })));;
 
             // delete all services connected with this invoice and then insert them
             await pool.query(
@@ -236,14 +236,13 @@ class InvoicesController {
                 `
             );
 
-            services.map(async (service: ServiceInterface) => {
-                await pool.query(
-                    `
-                        INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
-                        VALUES ('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}');
-                    `
-                );
-            });
+            await pool.query(
+                format(
+                    'INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)VALUES %L',
+                    services
+                ),
+                []
+            );
 
             res.sendStatus(200);
         } catch (err) {

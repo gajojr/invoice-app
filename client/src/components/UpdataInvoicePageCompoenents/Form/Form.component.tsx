@@ -18,7 +18,11 @@ const Form = ({ id }: { id: string }) => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get(`/invoices/${id}`);
+            const response = await axios.get(`/invoices/${id}`, {
+                params: {
+                    username: sessionStorage.getItem('username')
+                }
+            });
 
             const invoiceData = response.data.exchangeData;
             const servicesData = response.data.services;
@@ -57,7 +61,7 @@ const Form = ({ id }: { id: string }) => {
 
         console.log(data);
 
-        const invoiceResponse = await axios.patch(`/invoices/${id}`, data);
+        const invoiceResponse = await axios.post(`/invoices/update-invoice/${id}`, data);
 
         console.log(invoiceResponse);
 

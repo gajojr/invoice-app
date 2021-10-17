@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { controller, bodyValidator, del, patch } from '../decorators';
+import { controller, bodyValidator, del, post } from '../decorators';
 import { sendLeavingEmail } from '../../utils/emailAccount';
 import pool from '../../utils/db';
 import { UserEnum } from './UserEnum';
@@ -55,7 +55,7 @@ class UserController {
         }
     }
 
-    @patch('/')
+    @post('/update-user')
     @bodyValidator(UserEnum.username, UserEnum.adminUsername)
     async promoteUserToAdmin(req: Request, res: Response) {
         const username = req.body.username;

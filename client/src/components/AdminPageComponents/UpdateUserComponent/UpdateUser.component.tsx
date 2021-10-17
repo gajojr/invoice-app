@@ -11,7 +11,7 @@ const UpdateUser = () => {
             return;
         }
 
-        const response = await axios.patch('/users', { ...values, adminUsername: sessionStorage.getItem('username') });
+        const response = await axios.post('/users/update-user', { ...values, adminUsername: sessionStorage.getItem('username') });
         console.log(response);
 
         if (response.data.redirect) {
