@@ -6,6 +6,7 @@ import { AppRouter } from './AppRouter';
 import './controllers/AuthController/AuthController';
 import './controllers/AvatarController/AvatarController';
 import './controllers/InvoicesController/InvoicesController';
+import './controllers/UserController/UserController';
 
 const app = express();
 

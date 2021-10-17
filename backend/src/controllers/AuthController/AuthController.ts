@@ -3,6 +3,7 @@ import { get, post, controller, bodyValidator, use } from '../decorators';
 import bcrypt from 'bcrypt';
 import pool from '../../utils/db';
 import { upload } from '../../utils/fileActions';
+import { removeFile } from '../../utils/fileActions';
 import { AuthEnum } from './AuthEnum';
 
 @controller('')

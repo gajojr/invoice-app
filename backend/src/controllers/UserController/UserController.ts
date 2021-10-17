@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { controller, bodyValidator, del, post } from '../decorators';
 import { sendLeavingEmail } from '../../utils/emailAccount';
 import pool from '../../utils/db';
+import { removeFile } from '../../utils/fileActions';
 import { UserEnum } from './UserEnum';
 
 @controller('/users')
@@ -35,6 +36,8 @@ class UserController {
             }
 
             if (user.rows[0]?.role === 'admin') {
+                console.log('usao u drugi admin');
+                console.log(user.rows[0].role);
                 res.json({ error: 'You can\'t delete other admins' });
             }
 
@@ -49,8 +52,9 @@ class UserController {
 
             sendLeavingEmail(user.rows[0].email, username as string);
 
-            res.status(200);
+            res.sendStatus(200);
         } catch (err) {
+            console.log(err);
             res.status(500).json({ error: 'Server error occurred' });
         }
     }
@@ -95,6 +99,6 @@ class UserController {
             `
         );
 
-        res.status(200);
+        res.sendStatus(200);
     }
 }
