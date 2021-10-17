@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, use } from '../decorators';
+import { get, controller } from '../decorators';
 import pool from '../../utils/db';
 
 @controller('')

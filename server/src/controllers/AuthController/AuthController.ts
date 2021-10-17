@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, use } from '../decorators';
+import { post, controller, bodyValidator, use } from '../decorators';
 import bcrypt from 'bcrypt';
 import pool from '../../utils/db';
 import { upload } from '../../utils/fileActions';
