@@ -4,7 +4,7 @@ import sgMail from '@sendgrid/mail';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
-const sendLeavingEmail = (email: string, username: string) => {
+export const sendLeavingEmail = (email: string, username: string) => {
     const msg = {
         to: email,
         from: 'andreccccc12@gmail.com',
@@ -21,8 +21,4 @@ const sendLeavingEmail = (email: string, username: string) => {
                 console.error(error.response.body)
             }
         });
-}
-
-module.exports = {
-    sendLeavingEmail
 }

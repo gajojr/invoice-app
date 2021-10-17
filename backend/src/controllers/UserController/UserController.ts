@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { controller, bodyValidator, del, patch } from '../decorators';
+import { sendLeavingEmail } from '../../utils/emailAccount';
 import pool from '../../utils/db';
 import { UserEnum } from './UserEnum';
 

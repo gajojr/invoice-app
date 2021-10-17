@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import format from 'pg-format';
 import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, patch } from '../decorators';
 import pool from '../../utils/db';
 import { InvoiceEnum } from './InvoiceEnum';
@@ -102,7 +103,7 @@ class InvoicesController {
                 `
             );
 
-            res.status(200);
+            res.sendStatus(200);
         } catch (err) {
             res.status(500).json({ error: 'Server error occurred' });
         }
@@ -134,9 +135,32 @@ class InvoicesController {
 
             const invoiceId = await pool.query(
                 `
-                    INSERT INTO invoices(user_id, name, company_name, client_address, client_city, client_pib, closing_date, stamp_needed, sign_needed, pdv)
-                    VALUES(${userId.rows[0].id}, '${body.invoiceName}', '${body.companyName}', '${body.address}', '${body.city}', '${body.pib}', '${body.closingDate}', '${body.stamp}', '${body.sign}', '${body.pdv}');   
-                    
+                    INSERT INTO 
+                        invoices(
+                            user_id, 
+                            name, 
+                            company_name, 
+                            client_address, 
+                            client_city, 
+                            client_pib, 
+                            closing_date, 
+                            stamp_needed, 
+                            sign_needed, 
+                            pdv
+                        )
+                    VALUES(
+                        ${userId.rows[0].id}, 
+                        '${body.invoiceName}', 
+                        '${body.companyName}', 
+                        '${body.address}', 
+                        '${body.city}', 
+                        '${body.pib}', 
+                        '${body.closingDate}', 
+                        '${body.stamp}', 
+                        '${body.sign}', 
+                        '${body.pdv}'
+                    );   
+
                     SELECT CURRVAL(pg_get_serial_sequence('invoices','id'))
                 `
             );
@@ -152,29 +176,19 @@ class InvoicesController {
     async createServices(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;
-            const services = req.body;
+            let services = req.body;
+            services = services.map((service: ServiceInterface) => (Object.values({ invoiceId, ...service })));
 
             await pool.query(
-                `
-                    INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
-                    VALUES
-                    ${services.map((service: ServiceInterface) => {
-                    return `('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}'),`
-                })}
-                `
+                format(
+                    'INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)VALUES %L', services
+                ),
+                []
             );
 
-            // services.map(async (service: ServiceInterface) => {
-            //     await pool.query(
-            //         `
-            //             INSERT INTO services(invoice_id, service_type, unit, amount, price_per_unit)
-            //             VALUES ('${invoiceId}', '${service.service_type}', '${service.unit}', '${service.amount}', '${service.price_per_unit}');
-            //         `
-            //     );
-            // });
-
-            res.status(200);
+            res.sendStatus(200);
         } catch (err) {
+            console.log(err);
             res.status(500).json({ error: 'Server error occurred' });
         }
     }
@@ -231,7 +245,7 @@ class InvoicesController {
                 );
             });
 
-            res.status(200);
+            res.sendStatus(200);
         } catch (err) {
             res.json({ error: 'Server error occurred' });
         }

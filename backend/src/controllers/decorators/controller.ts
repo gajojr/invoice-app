@@ -15,7 +15,8 @@ function validatorBinder(property: RequestPropertyType) {
             }
 
             for (let key of keys) {
-                if (!req[property][key]) {
+                // some values are false so we need check for all falsy values except false
+                if (!req[property][key] && req[property][key] !== false) {
                     res.status(422).send(`Missing property: ${key}`);
                     return;
                 }

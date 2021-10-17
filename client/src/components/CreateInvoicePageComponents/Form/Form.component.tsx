@@ -19,24 +19,29 @@ const Form = () => {
         // close services panel because of inputs
         setServicePanelOpen(false);
 
-        const data = {
-            ...values,
+        // these properties shouldn't be included when sending the invoice Creation request
+        const serviceProperties = ['amount', 'pricePerUnit', 'serviceType', 'unit'];
+
+        // filter properties to send
+        const validKeys: string[] = Object.keys(values).filter((key: string) => serviceProperties.indexOf(key) === -1);
+
+        // create Object to send to server
+        const data: any = {
             stamp: stampValue === 1 ? true : false,
             sign: signValue === 1 ? true : false,
             pdv: pdvValue === 1 ? true : false
         }
+        validKeys.map((key: string) => data[key] = values[key]);
 
-        console.log(data);
-
-        const invoiceResponse = await axios.post('/invoices', data, {
+        const invoiceCreationResponse = await axios.post('/invoices', data, {
             params: {
                 username: sessionStorage.getItem('username')
             }
         });
 
-        console.log(invoiceResponse);
+        console.log(invoiceCreationResponse);
 
-        if (invoiceResponse.status !== 200) {
+        if (invoiceCreationResponse.status !== 200) {
             return message.error('Creating failed');
         }
 
@@ -47,7 +52,7 @@ const Form = () => {
             return;
         }
 
-        const invoiceId = invoiceResponse.data;
+        const invoiceId = invoiceCreationResponse.data;
 
         const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services);
 
