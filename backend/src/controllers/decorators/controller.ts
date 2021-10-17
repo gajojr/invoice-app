@@ -4,41 +4,31 @@ import { Methods } from './Methods';
 import { MetadataKeys } from './MetadataKeys';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-function bodyValidators(keys: string): RequestHandler {
-    return function (req: Request, res: Response, next: NextFunction) {
-        if (!req.body) {
-            res.status(422).send('Invalid request');
-            return;
-        }
+type RequestPropertyType = 'body' | 'query' | 'params';
 
-        for (let key of keys) {
-            if (!req.body[key]) {
-                res.status(422).send(`Missing property: ${key}`);
+function validatorBinder(property: RequestPropertyType) {
+    return function (keys: string): RequestHandler {
+        return function (req: Request, res: Response, next: NextFunction) {
+            if (!req[property]) {
+                res.status(422).send('Invalid request');
                 return;
             }
-        }
 
-        next();
+            for (let key of keys) {
+                if (!req[property][key]) {
+                    res.status(422).send(`Missing property: ${key}`);
+                    return;
+                }
+            }
+
+            next();
+        }
     }
 }
 
-function queryValidators(keys: string): RequestHandler {
-    return function (req: Request, res: Response, next: NextFunction) {
-        if (!req.query) {
-            res.status(422).send('Invalid request');
-            return;
-        }
-
-        for (let key of keys) {
-            if (!req.query[key]) {
-                res.status(422).send(`Missing query property: ${key}`);
-                return;
-            }
-        }
-
-        next();
-    }
-}
+const bodyValidators = validatorBinder('body');
+const queryValidators = validatorBinder('query');
+const paramValidators = validatorBinder('params');
 
 export function controller(routePrefix: string) {
     return function (target: Function) {
@@ -71,16 +61,23 @@ export function controller(routePrefix: string) {
                 target.prototype,
                 key
             ) || [];
+            const requiredParamProps = Reflect.getMetadata(
+                MetadataKeys.paramValidator,
+                target.prototype,
+                key
+            ) || [];
 
-            const validator = bodyValidators(requiredBodyProps);
+            const bodyValidator = bodyValidators(requiredBodyProps);
             const queryValidator = queryValidators(requiredQueryProps);
+            const paramValidator = paramValidators(requiredParamProps);
 
             if (path) {
                 router[method](
                     `${routePrefix}${path}`,
                     ...middlewares,
-                    validator,
+                    bodyValidator,
                     queryValidator,
+                    paramValidator,
                     routeHandler
                 );
             }

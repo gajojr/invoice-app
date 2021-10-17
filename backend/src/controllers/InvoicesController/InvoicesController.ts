@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { get, post, controller, bodyValidator, queryValidator, del, patch } from '../decorators';
+import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, patch } from '../decorators';
 import pool from '../../utils/db';
 import { InvoiceEnum } from './InvoiceEnum';
 import ServiceInterface from './ServiceInterface';
@@ -34,6 +34,7 @@ class InvoicesController {
 
     @get('/:id')
     @queryValidator('username')
+    @paramValidator('id')
     async getInvoiceById(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -89,6 +90,7 @@ class InvoicesController {
     }
 
     @del('/:id')
+    @paramValidator('id')
     async deleteInvoiceById(req: Request, res: Response) {
         try {
             const id = req.params.id;
@@ -146,6 +148,7 @@ class InvoicesController {
     }
 
     @post('/create-services/:id')
+    @paramValidator('id')
     async createServices(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;
@@ -188,6 +191,7 @@ class InvoicesController {
         InvoiceEnum.sign,
         InvoiceEnum.pdv
     )
+    @paramValidator('id')
     async updateInvoiceById(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;

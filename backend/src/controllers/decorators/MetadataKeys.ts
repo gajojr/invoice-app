@@ -3,5 +3,6 @@ export enum MetadataKeys {
     path = 'path',
     middleware = 'middleware',
     validator = 'validator',
-    queryValidator = 'queryValidator'
+    queryValidator = 'queryValidator',
+    paramValidator = 'paramValidator'
 }
