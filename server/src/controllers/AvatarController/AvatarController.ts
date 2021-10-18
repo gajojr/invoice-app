@@ -1,11 +1,14 @@
-import { Request, Response } from 'express';
-import { get, controller } from '../decorators';
+import { Request, RequestHandler, Response } from 'express';
+import { get, controller, use } from '../decorators';
 import pool from '../../utils/db';
+import { verifyJWT } from '../../utils/verifyJWT';
 
 @controller('')
 class AvatarController {
     @get('/avatar')
+    @use((verifyJWT as RequestHandler))
     async getAvatar(req: Request, res: Response) {
+        console.log('usao u get avatar');
         try {
             const username = req.query.username;
 

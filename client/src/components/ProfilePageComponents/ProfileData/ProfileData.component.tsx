@@ -19,11 +19,19 @@ const ProfileData = () => {
         }
 
         (async () => {
+            if (!sessionStorage.getItem('username') || !sessionStorage.getItem('token')) {
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
+
             try {
                 const response = await axios.get('/avatar',
                     {
                         params: {
                             username: sessionStorage.getItem('username')
+                        },
+                        headers: {
+                            'x-access-token': sessionStorage.getItem('token')
                         }
                     }
                 )
