@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import format from 'pg-format';
-import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, patch, put } from '../decorators';
+import { get, post, controller, bodyValidator, queryValidator, paramValidator, del, use } from '../decorators';
 import pool from '../../utils/db';
+import { verifyJWT } from '../../utils/verifyJWT';
 import { InvoiceEnum } from './InvoiceEnum';
 import ServiceInterface from './ServiceInterface';
 
@@ -9,6 +10,7 @@ import ServiceInterface from './ServiceInterface';
 class InvoicesController {
     @get('/')
     @queryValidator('username')
+    @use(verifyJWT as RequestHandler)
     async getInvoices(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -36,6 +38,7 @@ class InvoicesController {
     @get('/:id')
     @queryValidator('username')
     @paramValidator('id')
+    @use(verifyJWT as RequestHandler)
     async getInvoiceById(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -92,6 +95,7 @@ class InvoicesController {
 
     @del('/:id')
     @paramValidator('id')
+    @use(verifyJWT as RequestHandler)
     async deleteInvoiceById(req: Request, res: Response) {
         try {
             const id = req.params.id;
@@ -122,6 +126,7 @@ class InvoicesController {
         InvoiceEnum.pdv
     )
     @queryValidator('username')
+    @use(verifyJWT as RequestHandler)
     async createInvoice(req: Request, res: Response) {
         try {
             const body = req.body;
@@ -173,6 +178,7 @@ class InvoicesController {
 
     @post('/create-services/:id')
     @paramValidator('id')
+    @use(verifyJWT as RequestHandler)
     async createServices(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;
@@ -206,6 +212,7 @@ class InvoicesController {
         InvoiceEnum.pdv
     )
     @paramValidator('id')
+    @use(verifyJWT as RequestHandler)
     async updateInvoiceById(req: Request, res: Response) {
         try {
             const invoiceId = req.params.id;

@@ -1,13 +1,15 @@
-import { Request, Response } from 'express';
-import { controller, bodyValidator, del, post } from '../decorators';
+import { Request, RequestHandler, Response } from 'express';
+import { controller, bodyValidator, del, post, use } from '../decorators';
 import { sendLeavingEmail } from '../../utils/emailAccount';
 import pool from '../../utils/db';
+import { verifyJWT } from '../../utils/verifyJWT';
 import { removeFile } from '../../utils/fileActions';
 import { UserEnum } from './UserEnum';
 
 @controller('/users')
 class UserController {
     @del('/')
+    @use(verifyJWT as RequestHandler)
     async deleteUser(req: Request, res: Response) {
         try {
             const username = req.query.username;
@@ -61,6 +63,7 @@ class UserController {
 
     @post('/update-user')
     @bodyValidator(UserEnum.username, UserEnum.adminUsername)
+    @use(verifyJWT as RequestHandler)
     async promoteUserToAdmin(req: Request, res: Response) {
         const username = req.body.username;
         const adminUsername = req.body.adminUsername;

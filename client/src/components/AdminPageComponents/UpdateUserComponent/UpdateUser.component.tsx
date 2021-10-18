@@ -11,7 +11,13 @@ const UpdateUser = () => {
             return;
         }
 
-        const response = await axios.post('/users/update-user', { ...values, adminUsername: sessionStorage.getItem('username') });
+        const response = await axios.post('/users/update-user', {
+            ...values,
+            adminUsername: sessionStorage.getItem('username'),
+            headers: {
+                'x-access-token': sessionStorage.getItem('token')
+            }
+        });
         console.log(response);
 
         if (response.data.redirect) {

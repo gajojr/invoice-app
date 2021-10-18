@@ -21,6 +21,9 @@ const InvoicePaper = ({ id }: { id: string }) => {
             const response = await axios.get(`/invoices/${id}`, {
                 params: {
                     username: sessionStorage.getItem('username')
+                },
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
                 }
             });
             console.log(response);

@@ -13,6 +13,9 @@ const InvoicesList = () => {
             const response = await axios.get('/invoices', {
                 params: {
                     username: sessionStorage.getItem('username')
+                },
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
                 }
             });
             console.log(response);

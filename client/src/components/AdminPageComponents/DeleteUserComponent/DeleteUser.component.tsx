@@ -13,7 +13,10 @@ const DeleteUserComponent = () => {
         }
 
         const response = await axios.delete('/users', {
-            params: { ...values, adminUsername: sessionStorage.getItem('username') }
+            params: { ...values, adminUsername: sessionStorage.getItem('username') },
+            headers: {
+                'x-access-token': sessionStorage.getItem('token')
+            }
         });
         console.log(response);
 

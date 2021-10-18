@@ -21,6 +21,9 @@ const Form = ({ id }: { id: string }) => {
             const response = await axios.get(`/invoices/${id}`, {
                 params: {
                     username: sessionStorage.getItem('username')
+                },
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
                 }
             });
 

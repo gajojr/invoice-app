@@ -36,6 +36,9 @@ const Form = () => {
         const invoiceCreationResponse = await axios.post('/invoices', data, {
             params: {
                 username: sessionStorage.getItem('username')
+            },
+            headers: {
+                'x-access-token': sessionStorage.getItem('token')
             }
         });
 
@@ -55,7 +58,11 @@ const Form = () => {
 
         const invoiceId = invoiceCreationResponse.data;
 
-        const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services);
+        const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services, {
+            headers: {
+                'x-access-token': sessionStorage.getItem('token')
+            }
+        });
 
         console.log(servicesResponse);
 
