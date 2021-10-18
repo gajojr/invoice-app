@@ -8,7 +8,6 @@ class AvatarController {
     @get('/avatar')
     @use(verifyJWT as RequestHandler)
     async getAvatar(req: Request, res: Response) {
-        console.log('usao u get avatar');
         try {
             const username = req.query.username;
 

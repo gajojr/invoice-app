@@ -16,7 +16,7 @@ export const verifyJWT = (
     } else {
         jwt.verify(token, process.env.JWT_SECRET as string, (err: any) => {
             if (err) {
-                res.json({ auth: false, message: 'Auth failed' });
+                res.status(401).send('Auth failed');
             } else {
                 next();
             }

@@ -16,63 +16,74 @@ const Form = () => {
     const [services, setServices] = useState<ServiceInterface[]>([]);
 
     const onFinish = async (values: any) => {
-        // close services panel because of inputs
-        setServicePanelOpen(false);
+        try {
+            // close services panel because of inputs
+            setServicePanelOpen(false);
 
-        // these properties shouldn't be included when sending the invoice Creation request
-        const serviceProperties = ['amount', 'pricePerUnit', 'serviceType', 'unit'];
+            // these properties shouldn't be included when sending the invoice Creation request
+            const serviceProperties = ['amount', 'pricePerUnit', 'serviceType', 'unit'];
 
-        // filter properties to send
-        const validKeys: string[] = Object.keys(values).filter((key: string) => serviceProperties.indexOf(key) === -1);
+            // filter properties to send
+            const validKeys: string[] = Object.keys(values).filter((key: string) => serviceProperties.indexOf(key) === -1);
 
-        // create Object to send to server
-        const data: any = {
-            stamp: stampValue === 1 ? true : false,
-            sign: signValue === 1 ? true : false,
-            pdv: pdvValue === 1 ? true : false
-        }
-        validKeys.map((key: string) => data[key] = values[key]);
-
-        const invoiceCreationResponse = await axios.post('/invoices', data, {
-            params: {
-                username: sessionStorage.getItem('username')
-            },
-            headers: {
-                'x-access-token': sessionStorage.getItem('token')
+            // create Object to send to server
+            const data: any = {
+                stamp: stampValue === 1 ? true : false,
+                sign: signValue === 1 ? true : false,
+                pdv: pdvValue === 1 ? true : false
             }
-        });
+            validKeys.map((key: string) => data[key] = values[key]);
 
-        console.log(invoiceCreationResponse);
+            const invoiceCreationResponse = await axios.post('/invoices', data, {
+                params: {
+                    username: sessionStorage.getItem('username')
+                },
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
+                }
+            });
 
-        if (invoiceCreationResponse.status !== 200) {
-            return message.error('Creating failed');
-        }
+            console.log(invoiceCreationResponse);
 
-        message.success('Invoice created');
+            if (invoiceCreationResponse.status !== 200) {
+                return message.error('Creating failed');
+            }
 
-        // save time by not sending request
-        if (!services.length) {
+            message.success('Invoice created');
+
+            // save time by not sending request
+            if (!services.length) {
+                window.location.reload();
+                return;
+            }
+
+            const invoiceId = invoiceCreationResponse.data;
+
+            const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services, {
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
+                }
+            });
+
+            console.log(servicesResponse);
+
+            if (servicesResponse.status !== 200) {
+                message.error('services insert failed');
+            }
+
+            message.success('Services inserted successfully');
+
             window.location.reload();
-            return;
-        }
-
-        const invoiceId = invoiceCreationResponse.data;
-
-        const servicesResponse = await axios.post(`/invoices/create-services/${invoiceId}`, services, {
-            headers: {
-                'x-access-token': sessionStorage.getItem('token')
+        } catch (err: any) {
+            if (err.response.status === 401) {
+                message.error('Auth failed');
+            } else {
+                message.error('Server error occurred');
             }
-        });
 
-        console.log(servicesResponse);
-
-        if (servicesResponse.status !== 200) {
-            message.error('services insert failed');
+            sessionStorage.clear();
+            window.location.href = '/';
         }
-
-        message.success('Services inserted successfully');
-
-        window.location.reload();
     }
 
     const addService = () => {
