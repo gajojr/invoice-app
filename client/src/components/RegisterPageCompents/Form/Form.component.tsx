@@ -5,8 +5,8 @@ import axios from 'axios';
 import { FormElement, FormCaption, StyledButton, UploadButton } from './Form.style';
 import { Input, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-
-// import { UserSchema } from './UserSchema';
+import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
 
 const Form = () => {
     const [files, setFiles] = useState<File[]>([]);
@@ -15,26 +15,22 @@ const Form = () => {
         beforeUpload: (file: File) => {
             setFiles([file]);
         },
-        onRemove: (file: any) => {
+        onRemove: (file: UploadFile<any>) => {
             setFiles([]);
         },
-        onChange: (info: any) => {
+        onChange: (info: UploadChangeParam<UploadFile<any>>) => {
             if (info.file.status === 'done') {
                 message.success('file uploaded');
             }
         },
-        customRequest: (options: any) => {
+        customRequest: (options: UploadRequestOption<any>) => {
             setTimeout(() => {
-                options.onSuccess('ok');
+                (options as any).onSuccess('ok');
             }, 0);
         }
     };
 
-    // change values type to UserSchema
     const onFinish = (values: any) => {
-        console.log('usao u onFinish');
-        console.log('values', values);
-
         const formData = new FormData();
         for (const name in values) {
             formData.append(name, values[name]); // there should be values.avatar which is a File object
@@ -50,12 +46,13 @@ const Form = () => {
             return;
         }
 
-        axios.post('http://localhost:5000/register', formData)
+        axios.post('/register', formData)
             .then(res => {
                 console.log(res)
                 if (!res.data.error) {
                     message.success('registered successfully');
                     sessionStorage.setItem('username', res.data.username);
+                    sessionStorage.setItem('token', res.data.token)
                     window.location.href = '/profile-page';
                 } else {
                     console.log(res.data.error)

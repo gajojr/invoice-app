@@ -4,15 +4,14 @@ import axios from 'axios';
 
 const Form = () => {
     const onFinish = (values: any) => {
-        console.log('values', values);
-
-        axios.post('http://localhost:5000/log-in', values)
+        axios.post('/log-in', values)
             .then(res => {
                 console.log(res)
                 if (!res.data.error) {
                     message.success('logged in successfully');
                     sessionStorage.setItem('username', res.data.username);
                     sessionStorage.setItem('role', res.data.role);
+                    sessionStorage.setItem('token', res.data.token);
                     if (res.data.role === 'admin') {
                         return window.location.href = '/admin-page';
                     }

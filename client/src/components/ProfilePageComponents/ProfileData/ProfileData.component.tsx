@@ -37,7 +37,7 @@ const ProfileData = () => {
 
     const logOff = () => {
         if (window.confirm('do you want to log off?')) {
-            sessionStorage.removeItem('username');
+            sessionStorage.clear();
             window.location.href = '/';
         }
     }

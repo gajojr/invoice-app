@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { post, controller, bodyValidator, use } from '../decorators';
 import bcrypt from 'bcrypt';
+import jwt, { Secret } from 'jsonwebtoken';
+import { post, controller, bodyValidator, use } from '../decorators';
 import pool from '../../utils/db';
 import { upload } from '../../utils/fileActions';
 import { removeFile } from '../../utils/fileActions';
@@ -42,7 +43,7 @@ class AuthController {
                 console.log('usao u username check');
                 // register failed, remove the profile picture
                 removeFile(filePath as string);
-                res.send({ error: 'user with this username already exists!' });
+                res.json({ error: 'user with this username already exists!' });
             }
 
             const emailQuery = await pool.query(
@@ -56,7 +57,7 @@ class AuthController {
                 console.log('usao u email check');
                 // register failed, remove the profile picture
                 removeFile(filePath as string);
-                res.send({ error: 'user with this email already exists!' });
+                res.json({ error: 'user with this email already exists!' });
             }
 
             await pool.query(
@@ -66,9 +67,13 @@ class AuthController {
                 `
             );
 
-            res.json({ ...req.body });
+            const payload = { username };
+            const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, { expiresIn: 3600 });
+
+            res.json({ ...req.body, token });
         } catch (err) {
             console.log(err);
+            res.json({ error: 'Server error occurred' });
         }
     }
 
@@ -102,18 +107,16 @@ class AuthController {
             const comparePasswordSuccess = await bcrypt.compare(password, passwordFromDb);
 
             if (comparePasswordSuccess) {
-                res.json({ username, role: passwordAndRoleQuery.rows[0].role });
+                const payload = { username };
+                const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, { expiresIn: 3600 });
+
+                res.json({ username, role: passwordAndRoleQuery.rows[0].role, token });
             } else {
                 res.json({ error: 'false credentials' });
             }
         } catch (err) {
             console.log(err);
+            res.json({ error: 'Server error occurred' });
         }
     }
-
-    // @get('/logout')
-    // getLogout(req: Request, res: Response) {
-    // req.session = undefined;
-    // res.redirect('/');
-    // }
 }
