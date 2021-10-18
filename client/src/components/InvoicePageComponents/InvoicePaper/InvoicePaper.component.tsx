@@ -10,6 +10,7 @@ import SignAndPDVInfo from '../SignAndPDVInfo/SignAndPDVInfo.component';
 
 import ServiceInterface from '../ServiceInterface';
 import InvoiceDataInterface from '../InvoiceDataInterface';
+import { message } from 'antd';
 
 const InvoicePaper = ({ id }: { id: string }) => {
     const [invoiceData, setInvoiceData] = useState<InvoiceDataInterface>({} as InvoiceDataInterface);
@@ -18,20 +19,31 @@ const InvoicePaper = ({ id }: { id: string }) => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get(`/invoices/${id}`, {
-                params: {
-                    username: sessionStorage.getItem('username')
-                },
-                headers: {
-                    'x-access-token': sessionStorage.getItem('token')
+            try {
+                const response = await axios.get(`/invoices/${id}`, {
+                    params: {
+                        username: sessionStorage.getItem('username')
+                    },
+                    headers: {
+                        'x-access-token': sessionStorage.getItem('token')
+                    }
+                });
+                console.log(response);
+
+                setInvoiceData(response.data.exchangeData);
+                setServices(response.data.services);
+
+                setTotalPriceOfAllServices(calculatePriceOfAllServices(response.data.services));
+            } catch (err: any) {
+                if (err?.response?.status === 401) {
+                    message.error('Auth failed');
+                } else {
+                    message.error('Server error occurred');
                 }
-            });
-            console.log(response);
 
-            setInvoiceData(response.data.exchangeData);
-            setServices(response.data.services);
-
-            setTotalPriceOfAllServices(calculatePriceOfAllServices(response.data.services));
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
         })();
     }, [id]);
 

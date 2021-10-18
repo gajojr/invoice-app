@@ -18,22 +18,33 @@ const Form = ({ id }: { id: string }) => {
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get(`/invoices/${id}`, {
-                params: {
-                    username: sessionStorage.getItem('username')
-                },
-                headers: {
-                    'x-access-token': sessionStorage.getItem('token')
+            try {
+                const response = await axios.get(`/invoices/${id}`, {
+                    params: {
+                        username: sessionStorage.getItem('username')
+                    },
+                    headers: {
+                        'x-access-token': sessionStorage.getItem('token')
+                    }
+                });
+
+                const invoiceData = response.data.exchangeData;
+                const servicesData = response.data.services;
+
+                fillInTheInputs(invoiceData);
+                setServices(servicesData);
+
+                console.log(response);
+            } catch (err: any) {
+                if (err?.response?.status === 401) {
+                    message.error('Auth failed');
+                } else {
+                    message.error('Server error occurred');
                 }
-            });
 
-            const invoiceData = response.data.exchangeData;
-            const servicesData = response.data.services;
-
-            fillInTheInputs(invoiceData);
-            setServices(servicesData);
-
-            console.log(response);
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
         })();
     }, [id]);
 
@@ -51,30 +62,41 @@ const Form = ({ id }: { id: string }) => {
     }
 
     const onFinish = async (values: any) => {
-        // close services panel because of inputs
-        setServicePanelOpen(false);
+        try {
+            // close services panel because of inputs
+            setServicePanelOpen(false);
 
-        const data = {
-            ...values,
-            stamp: stampValue,
-            sign: signValue,
-            pdv: pdvValue,
-            services
+            const data = {
+                ...values,
+                stamp: stampValue,
+                sign: signValue,
+                pdv: pdvValue,
+                services
+            }
+
+            console.log(data);
+
+            const invoiceResponse = await axios.post(`/invoices/update-invoice/${id}`, data);
+
+            console.log(invoiceResponse);
+
+            if (invoiceResponse.status !== 200) {
+                return message.error('Updating failed');
+            }
+
+            message.success('Invoice updated');
+
+            window.location.reload();
+        } catch (err: any) {
+            if (err?.response?.status === 401) {
+                message.error('Auth failed');
+            } else {
+                message.error('Server error occurred');
+            }
+
+            sessionStorage.clear();
+            window.location.href = '/';
         }
-
-        console.log(data);
-
-        const invoiceResponse = await axios.post(`/invoices/update-invoice/${id}`, data);
-
-        console.log(invoiceResponse);
-
-        if (invoiceResponse.status !== 200) {
-            return message.error('Updating failed');
-        }
-
-        message.success('Invoice updated');
-
-        window.location.reload();
     }
 
     const addService = () => {

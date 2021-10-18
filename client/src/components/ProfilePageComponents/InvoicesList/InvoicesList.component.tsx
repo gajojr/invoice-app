@@ -4,22 +4,34 @@ import axios from 'axios';
 import { InvoiceInterface } from '../InvoiceInterface';
 import { CardsContainer, CardContainer } from './InvoicesList.styles';
 import InvoiceCard from '../InvoiceCard/InvoiceCard.component';
+import { message } from 'antd';
 
 const InvoicesList = () => {
     const [invoices, setInvoices] = useState<InvoiceInterface[]>([]);
 
     useEffect(() => {
         (async () => {
-            const response = await axios.get('/invoices', {
-                params: {
-                    username: sessionStorage.getItem('username')
-                },
-                headers: {
-                    'x-access-token': sessionStorage.getItem('token')
+            try {
+                const response = await axios.get('/invoices', {
+                    params: {
+                        username: sessionStorage.getItem('username')
+                    },
+                    headers: {
+                        'x-access-token': sessionStorage.getItem('token')
+                    }
+                });
+                console.log(response);
+                setInvoices(response.data);
+            } catch (err: any) {
+                if (err?.response?.status === 401) {
+                    message.error('Auth failed');
+                } else {
+                    message.error('Server error occurred');
                 }
-            });
-            console.log(response);
-            setInvoices(response.data);
+
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
         })();
     }, []);
 

@@ -6,35 +6,46 @@ import { FormElement, ButtonElement } from './DeleteUser.style';
 
 const DeleteUserComponent = () => {
     const onFinish = async (values: any) => {
-        if (sessionStorage.getItem('username') === values.username) {
-            if (!window.confirm('You are deleteing this account, proceed?')) {
+        try {
+            if (sessionStorage.getItem('username') === values.username) {
+                if (!window.confirm('You are deleteing this account, proceed?')) {
+                    return;
+                }
+            }
+
+            const response = await axios.delete('/users', {
+                params: { ...values, adminUsername: sessionStorage.getItem('username') },
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
+                }
+            });
+            console.log(response);
+
+            if (response.data.redirect) {
+                sessionStorage.clear();
+                window.location.href = '/';
                 return;
             }
-        }
 
-        const response = await axios.delete('/users', {
-            params: { ...values, adminUsername: sessionStorage.getItem('username') },
-            headers: {
-                'x-access-token': sessionStorage.getItem('token')
+            if (response.data.error) {
+                return message.error(response.data.error);
             }
-        });
-        console.log(response);
 
-        if (response.data.redirect) {
+            if (response.status !== 200) {
+                return message.error('User deleting failed');
+            }
+
+            message.success('User deleted');
+        } catch (err: any) {
+            if (err?.response?.status === 401) {
+                message.error('Auth failed');
+            } else {
+                message.error('Server error occurred');
+            }
+
             sessionStorage.clear();
             window.location.href = '/';
-            return;
         }
-
-        if (response.data.error) {
-            return message.error(response.data.error);
-        }
-
-        if (response.status !== 200) {
-            return message.error('User deleting failed');
-        }
-
-        message.success('User deleted');
     }
 
     return (

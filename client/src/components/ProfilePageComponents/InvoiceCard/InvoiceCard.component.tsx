@@ -10,17 +10,28 @@ import { StyledCard, DeleteButton, UpdateButton } from './InvoiceCard.style';
 const InvoiceCard = ({ invoice }: { invoice: InvoiceInterface }) => {
     const deleteInvoice = async (id: number) => {
         if (window.confirm('do you want to delete this invoice')) {
-            const response = await axios.delete(`/invoices/${id}`, {
-                headers: {
-                    'x-access-token': sessionStorage.getItem('token')
+            try {
+                const response = await axios.delete(`/invoices/${id}`, {
+                    headers: {
+                        'x-access-token': sessionStorage.getItem('token')
+                    }
+                });
+                console.log(response);
+                if (response.status === 200) {
+                    message.success('invoice deleted!');
+                    window.location.reload();
+                } else {
+                    message.error('deleting failed');
                 }
-            });
-            console.log(response);
-            if (response.status === 200) {
-                message.success('invoice deleted!');
-                window.location.reload();
-            } else {
-                message.error('deleting failed');
+            } catch (err: any) {
+                if (err?.response?.status === 401) {
+                    message.error('Auth failed');
+                } else {
+                    message.error('Server error occurred');
+                }
+
+                sessionStorage.clear();
+                window.location.href = '/';
             }
         }
     }

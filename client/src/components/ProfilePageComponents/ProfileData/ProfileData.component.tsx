@@ -38,7 +38,14 @@ const ProfileData = () => {
                 console.log(response.data);
                 setAvatarURL(clearUpTheUrl(response.data));
             } catch (err: any) {
-                message.error('Profile picture couldn\'t be loaded');
+                if (err?.response?.status === 401) {
+                    message.error('Auth failed');
+                } else {
+                    message.error('Profile picture couldn\'t be loaded');
+                }
+
+                sessionStorage.clear();
+                window.location.href = '/';
             }
         })();
     }, []);

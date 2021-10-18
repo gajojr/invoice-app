@@ -6,35 +6,46 @@ import { FormElement, ButtonElement } from '../DeleteUserComponent/DeleteUser.st
 
 const UpdateUser = () => {
     const onFinish = async (values: any) => {
-        if (sessionStorage.getItem('username') === values.username) {
-            message.error('You can\'t promote yourself, you are already admin!');
-            return;
-        }
-
-        const response = await axios.post('/users/update-user', {
-            ...values,
-            adminUsername: sessionStorage.getItem('username'),
-            headers: {
-                'x-access-token': sessionStorage.getItem('token')
+        try {
+            if (sessionStorage.getItem('username') === values.username) {
+                message.error('You can\'t promote yourself, you are already admin!');
+                return;
             }
-        });
-        console.log(response);
 
-        if (response.data.redirect) {
+            const response = await axios.post('/users/update-user', {
+                ...values,
+                adminUsername: sessionStorage.getItem('username'),
+                headers: {
+                    'x-access-token': sessionStorage.getItem('token')
+                }
+            });
+            console.log(response);
+
+            if (response.data.redirect) {
+                sessionStorage.clear();
+                window.location.href = '/';
+                return;
+            }
+
+            if (response.data.error) {
+                return message.error(response.data.error);
+            }
+
+            if (response.status !== 200) {
+                return message.error('User updating failed');
+            }
+
+            message.success('User updated');
+        } catch (err: any) {
+            if (err?.response?.status === 401) {
+                message.error('Auth failed');
+            } else {
+                message.error('Server error occurred');
+            }
+
             sessionStorage.clear();
             window.location.href = '/';
-            return;
         }
-
-        if (response.data.error) {
-            return message.error(response.data.error);
-        }
-
-        if (response.status !== 200) {
-            return message.error('User updating failed');
-        }
-
-        message.success('User updated');
     }
 
     return (

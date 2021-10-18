@@ -11,8 +11,7 @@ export const verifyJWT = (
     const token = req.headers['x-access-token'] as string;
 
     if (!token) {
-        res.contentType('text/plain');
-        res.send('You are not authenticated, you need a token!');
+        res.status(401).send('You are not authenticated');
     } else {
         jwt.verify(token, process.env.JWT_SECRET as string, (err: any) => {
             if (err) {

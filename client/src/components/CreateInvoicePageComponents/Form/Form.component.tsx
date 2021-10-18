@@ -75,7 +75,7 @@ const Form = () => {
 
             window.location.reload();
         } catch (err: any) {
-            if (err.response.status === 401) {
+            if (err?.response?.status === 401) {
                 message.error('Auth failed');
             } else {
                 message.error('Server error occurred');
