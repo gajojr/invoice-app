@@ -5,7 +5,7 @@ import axios from 'axios';
 import ServiceInterface from './ServiceInterface';
 
 import { FormElement, FormCaption, StyledButton, ServicesForm, ServicePanelToggler, ServicesContainer, Service, ServiceField, RemoveIcon } from './Form.style';
-import { DatePicker, Input, Radio, message } from 'antd';
+import { DatePicker, Input, Radio, message, RadioChangeEvent } from 'antd';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
 const Form = () => {
@@ -270,21 +270,21 @@ const Form = () => {
                     : null
             }
 
-            <Radio.Group onChange={(e: any) => setStampValue(e.target.value)} value={stampValue} style={{ margin: 5 }}>
+            <Radio.Group onChange={(e: RadioChangeEvent) => setStampValue(e.target.value)} value={stampValue} style={{ margin: 5 }}>
                 <hr />
                 <Radio value={1}>Stamp needed</Radio>
                 <Radio value={2}>Stamp isn't needed</Radio>
                 <hr />
             </Radio.Group>
 
-            <Radio.Group onChange={(e: any) => setSignValue(e.target.value)} value={signValue} style={{ margin: 5 }}>
+            <Radio.Group onChange={(e: RadioChangeEvent) => setSignValue(e.target.value)} value={signValue} style={{ margin: 5 }}>
                 <hr />
                 <Radio value={1}>Sign needed</Radio>
                 <Radio value={2}>Sign isn't needed</Radio>
                 <hr />
             </Radio.Group>
 
-            <Radio.Group onChange={(e: any) => setPdvValue(e.target.value)} value={pdvValue} style={{ margin: 5 }}>
+            <Radio.Group onChange={(e: RadioChangeEvent) => setPdvValue(e.target.value)} value={pdvValue} style={{ margin: 5 }}>
                 <hr />
                 <Radio value={1}>Tax gatherer is in pdv system</Radio>
                 <Radio value={2}>Tax gatherer isn't in pdv system</Radio>
