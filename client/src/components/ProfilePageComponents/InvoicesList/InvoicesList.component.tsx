@@ -1,39 +1,18 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { InvoiceState, loadInvoices } from '../../../redux/reducers/invoiceReducer';
 
 import { InvoiceInterface } from '../InvoiceInterface';
 import { CardsContainer, CardContainer } from './InvoicesList.styles';
 import InvoiceCard from '../InvoiceCard/InvoiceCard.component';
-import { message } from 'antd';
 
 const InvoicesList = () => {
-    const [invoices, setInvoices] = useState<InvoiceInterface[]>([]);
+    const invoices = useSelector<InvoiceState, InvoiceState['invoices']>((state) => state.invoices);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        (async () => {
-            try {
-                const response = await axios.get('/invoices', {
-                    params: {
-                        username: sessionStorage.getItem('username')
-                    },
-                    headers: {
-                        'x-access-token': sessionStorage.getItem('token')
-                    }
-                });
-                console.log(response);
-                setInvoices(response.data);
-            } catch (err: any) {
-                if (err?.response?.status === 401) {
-                    message.error('Auth failed');
-                } else {
-                    message.error('Server error occurred');
-                }
-
-                sessionStorage.clear();
-                window.location.href = '/';
-            }
-        })();
-    }, []);
+        dispatch(loadInvoices());
+    }, [dispatch]);
 
     if (!invoices.length) {
         return <span>You don't have any invoices yet</span>
