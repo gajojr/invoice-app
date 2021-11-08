@@ -2,6 +2,7 @@ import { Request, RequestHandler, Response } from 'express';
 import { get, controller, use } from '../decorators';
 import pool from '../../utils/db';
 import { verifyJWT } from '../../utils/verifyJWT';
+import { imageUrlCleanUp } from '../../utils/imageUrlCleanUp';
 import { getFileStream } from '../../utils/s3';
 
 @controller('')
@@ -20,9 +21,9 @@ class AvatarController {
                 `
             );
 
-            let docUrl = documentQuery.rows[0].document_location;
+            let docUrl = imageUrlCleanUp(documentQuery.rows[0].document_location);
             // from uploads\key to avatar/key
-            docUrl = `avatar/${docUrl.substring(docUrl.indexOf('\\') + 1, docUrl.length)}`;
+            docUrl = `avatar/${docUrl}`;
 
             res.send(docUrl);
         } catch (err) {

@@ -1,7 +1,11 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 import fs from 'fs';
-import S3, { GetObjectRequest, PutObjectRequest } from 'aws-sdk/clients/s3';
+import S3, {
+    DeleteObjectRequest,
+    GetObjectRequest,
+    PutObjectRequest
+} from 'aws-sdk/clients/s3';
 
 const s3 = new S3({
     region: process.env.AWS_BUCKET_REGION,
@@ -33,4 +37,11 @@ export function getFileStream(fileKey: string) {
 }
 
 // removes file
-export function removeFileFromS3() {}
+export function removeFileFromS3(fileKey: string) {
+    const deleteParams = {
+        Key: fileKey,
+        Bucket: process.env.AWS_BUCKET_NAME
+    }
+
+    return s3.deleteObject(deleteParams as DeleteObjectRequest).createReadStream();
+}

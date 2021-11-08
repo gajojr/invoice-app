@@ -3,8 +3,9 @@ import { controller, bodyValidator, del, post, use } from '../decorators';
 import { sendLeavingEmail } from '../../utils/emailAccount';
 import pool from '../../utils/db';
 import { verifyJWT } from '../../utils/verifyJWT';
-import { removeFile } from '../../utils/fileActions';
 import { UserEnum } from './UserEnum';
+import { imageUrlCleanUp } from '../../utils/imageUrlCleanUp';
+import { removeFileFromS3 } from '../../utils/s3';
 
 @controller('/users')
 class UserController {
@@ -50,7 +51,8 @@ class UserController {
                 `
             );
 
-            removeFile(user.rows[0].document_location);
+            // delete file from s3 bucket
+            removeFileFromS3(imageUrlCleanUp(user.rows[0].document_location));
 
             sendLeavingEmail(user.rows[0].email, username as string);
 
