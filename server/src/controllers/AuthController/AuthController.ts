@@ -6,6 +6,7 @@ import pool from '../../utils/db';
 import { upload } from '../../utils/fileActions';
 import { removeFile } from '../../utils/fileActions';
 import { AuthEnum } from './AuthEnum';
+import { uploadFile } from '../../utils/s3';
 
 @controller('')
 class AuthController {
@@ -66,6 +67,10 @@ class AuthController {
                     VALUES ('${firstName}', '${lastName}', '${hashedPassword}', '${username}', '${address}', '${city}', '${postalCode}', '${companyName}', '${pib}', '${giroAccount}', CURRENT_DATE, '${email}', 'user', '${filePath}');
                 `
             );
+
+            // upload to s3 bucket
+            const s3uploadResult = await uploadFile(req.file as Express.Multer.File);
+            console.log(s3uploadResult);
 
             const payload = { username };
             const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, { expiresIn: 3600 });
