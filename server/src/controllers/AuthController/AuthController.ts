@@ -27,7 +27,19 @@ class AuthController {
     )
     async postRegister(req: Request, res: Response) {
         try {
-            const { firstName, lastName, password, username, address, city, postalCode, companyName, pib, giroAccount, email } = req.body;
+            const {
+                firstName,
+                lastName,
+                password,
+                username,
+                address,
+                city,
+                postalCode,
+                companyName,
+                pib,
+                giroAccount,
+                email
+            } = req.body;
             // file path is not in body
             const filePath = req?.file?.path;
 
@@ -74,6 +86,9 @@ class AuthController {
 
             const payload = { username };
             const token = jwt.sign(payload, process.env.JWT_SECRET as Secret, { expiresIn: 3600 });
+
+            // remove file from uploads since now we are storing to s3 bucket
+            removeFile(filePath as string);
 
             res.json({ ...req.body, token });
         } catch (err) {

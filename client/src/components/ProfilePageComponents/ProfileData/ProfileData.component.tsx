@@ -13,11 +13,6 @@ const ProfileData = () => {
             window.location.href = '/';
         }
 
-        const clearUpTheUrl = (url: string) => {
-            const clearedUpUrl = url.replace(/\\/g, '/');
-            return clearedUpUrl;
-        }
-
         (async () => {
             if (!sessionStorage.getItem('username') || !sessionStorage.getItem('token')) {
                 sessionStorage.clear();
@@ -36,7 +31,7 @@ const ProfileData = () => {
                     }
                 )
                 console.log(response.data);
-                setAvatarURL(clearUpTheUrl(response.data));
+                setAvatarURL(response.data);
             } catch (err: any) {
                 if (err?.response?.status === 401) {
                     message.error('Auth failed');

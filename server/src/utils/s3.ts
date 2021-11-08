@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
 import fs from 'fs';
-import S3, { PutObjectRequest } from 'aws-sdk/clients/s3';
+import S3, { GetObjectRequest, PutObjectRequest } from 'aws-sdk/clients/s3';
 
 const s3 = new S3({
     region: process.env.AWS_BUCKET_REGION,
@@ -23,3 +23,14 @@ export function uploadFile(file: Express.Multer.File) {
 }
 
 // downloads file
+export function getFileStream(fileKey: string) {
+    const downloadParams = {
+        Key: fileKey,
+        Bucket: process.env.AWS_BUCKET_NAME
+    }
+
+    return s3.getObject(downloadParams as GetObjectRequest).createReadStream();
+}
+
+// removes file
+export function removeFileFromS3() {}
